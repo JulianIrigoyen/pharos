@@ -34,7 +34,7 @@ export async function POST(request: NextRequest) {
 
   if (event.type === "checkout.session.completed") {
     const session = event.data.object as Stripe.Checkout.Session;
-    const { diagnostic_type, exam_level } = session.metadata || {};
+    const { diagnostic_type, exam_level, user_id, utm_source, utm_medium, utm_campaign, utm_content, utm_term } = session.metadata || {};
 
     if (!diagnostic_type || !exam_level) {
       console.error("Missing metadata in checkout session:", session.id);
@@ -58,6 +58,12 @@ export async function POST(request: NextRequest) {
         exam_level,
         amount_paid: session.amount_total ?? 0,
         status: "paid",
+        user_id: user_id || null,
+        utm_source: utm_source || null,
+        utm_medium: utm_medium || null,
+        utm_campaign: utm_campaign || null,
+        utm_content: utm_content || null,
+        utm_term: utm_term || null,
       });
 
       if (insertError) {

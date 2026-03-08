@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getStripe, getPriceId } from "@/lib/stripe";
+import { createClient } from "@/lib/supabase/server";
 import type { DiagnosticType, ExamLevel } from "@/types/diagnostic";
 
 const VALID_DIAGNOSTIC_TYPES: DiagnosticType[] = [
@@ -12,7 +13,10 @@ const VALID_EXAM_LEVELS: ExamLevel[] = ["B2", "C1"];
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { diagnosticType, examLevel } = body;
+    const { diagnosticType, examLevel, utm_source, utm_medium, utm_campaign, utm_content, utm_term } = body;
+
+    const supabase = await createClient();
+    const { data: { user } } = await supabase.auth.getUser();
 
     if (!diagnosticType || !examLevel) {
       return NextResponse.json(
@@ -44,6 +48,12 @@ export async function POST(request: NextRequest) {
       metadata: {
         diagnostic_type: diagnosticType,
         exam_level: examLevel,
+        user_id: user?.id ?? '',
+        utm_source: utm_source ?? '',
+        utm_medium: utm_medium ?? '',
+        utm_campaign: utm_campaign ?? '',
+        utm_content: utm_content ?? '',
+        utm_term: utm_term ?? '',
       },
       success_url: `${origin}/exam/{CHECKOUT_SESSION_ID}`,
       cancel_url: `${origin}/diagnostics/${diagnosticType}`,

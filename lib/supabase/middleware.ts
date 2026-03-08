@@ -4,7 +4,7 @@ import { NextResponse, type NextRequest } from "next/server";
 export async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({ request });
 
-  createServerClient(
+  const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
@@ -25,8 +25,19 @@ export async function updateSession(request: NextRequest) {
     }
   );
 
-  // Protect exam routes — require valid order (checked at page level)
-  // No auth-based redirects for now — orders validated by orderId
+  // Refresh the session so the server has the latest auth state
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  // Protect /exam routes — require authenticated user
+  const { pathname } = request.nextUrl;
+  if (pathname.startsWith("/exam") && !user) {
+    const loginUrl = request.nextUrl.clone();
+    loginUrl.pathname = "/login";
+    loginUrl.searchParams.set("redirect", pathname);
+    return NextResponse.redirect(loginUrl);
+  }
 
   return supabaseResponse;
 }

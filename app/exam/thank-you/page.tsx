@@ -1,9 +1,11 @@
 import Link from "next/link";
 import { CheckCircle2 } from "lucide-react";
+import { ThankYouTracker } from "@/components/analytics/ThankYouTracker";
 
 export default function ThankYouPage() {
   return (
     <main>
+      <ThankYouTracker />
       <section className="section-padding">
         <div className="mx-auto flex max-w-2xl flex-col items-center py-16 text-center">
           <CheckCircle2

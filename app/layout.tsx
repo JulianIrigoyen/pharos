@@ -3,6 +3,8 @@ import type { ReactNode } from "react";
 import { Playfair_Display, Inter } from "next/font/google";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { MetaPixel } from "@/components/analytics/MetaPixel";
+import { UtmCapture } from "@/components/analytics/UtmCapture";
 import "./globals.css";
 
 const playfair = Playfair_Display({
@@ -82,6 +84,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <Header />
         {children}
         <Footer />
+        <MetaPixel />
+        <UtmCapture />
       </body>
     </html>
   );

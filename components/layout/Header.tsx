@@ -4,6 +4,9 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Compass, Menu, X } from "lucide-react";
 import clsx from "clsx";
+import { createClient } from "@/lib/supabase/client";
+import { UserMenu } from "@/components/auth/UserMenu";
+import type { User } from "@supabase/supabase-js";
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -15,11 +18,29 @@ const navLinks = [
 export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  // Auth state
+  useEffect(() => {
+    const supabase = createClient();
+
+    supabase.auth.getUser().then(({ data }) => {
+      setUser(data.user);
+    });
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+    });
+
+    return () => subscription.unsubscribe();
   }, []);
 
   // Lock body scroll when mobile menu is open
@@ -67,10 +88,24 @@ export function Header() {
           ))}
         </ul>
 
-        {/* Desktop CTA */}
-        <Link href="/diagnostics" className="btn-gold hidden md:inline-flex">
-          Get Started
-        </Link>
+        {/* Desktop CTA / Auth */}
+        <div className="hidden items-center gap-4 md:flex">
+          {user ? (
+            <UserMenu user={user} />
+          ) : (
+            <>
+              <Link
+                href="/login"
+                className="font-body text-sm tracking-wide text-navy-700 transition-colors duration-200 hover:text-navy-900"
+              >
+                Log In
+              </Link>
+              <Link href="/signup" className="btn-gold">
+                Get Started
+              </Link>
+            </>
+          )}
+        </div>
 
         {/* Mobile hamburger */}
         <button
@@ -109,13 +144,28 @@ export function Header() {
             </Link>
           ))}
 
-          <Link
-            href="/diagnostics"
-            className="btn-gold mt-4 w-full max-w-xs text-center"
-            onClick={() => setMobileOpen(false)}
-          >
-            Get Started
-          </Link>
+          {user ? (
+            <div className="mt-4">
+              <UserMenu user={user} />
+            </div>
+          ) : (
+            <>
+              <Link
+                href="/login"
+                className="font-body text-lg tracking-wide text-navy-800 transition-colors duration-200 hover:text-gold-500"
+                onClick={() => setMobileOpen(false)}
+              >
+                Log In
+              </Link>
+              <Link
+                href="/signup"
+                className="btn-gold mt-2 w-full max-w-xs text-center"
+                onClick={() => setMobileOpen(false)}
+              >
+                Get Started
+              </Link>
+            </>
+          )}
         </div>
       </div>
     </header>
