@@ -45,6 +45,7 @@ export async function POST(request: NextRequest) {
     const session = await getStripe().checkout.sessions.create({
       line_items: [{ price: priceId, quantity: 1 }],
       mode: "payment",
+      ...(user?.email ? { customer_email: user.email } : {}),
       metadata: {
         diagnostic_type: diagnosticType,
         exam_level: examLevel,

@@ -2,12 +2,12 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import {
   ArrowLeft,
-  CheckCircle2,
   FileEdit,
   BarChart3,
   Target,
   BookOpen,
 } from "lucide-react";
+import { CheckoutButton } from "@/components/diagnostics/CheckoutButton";
 
 export const metadata: Metadata = {
   title: "Writing Diagnostic | Pharos English Lab",
@@ -204,17 +204,15 @@ export default function WritingDiagnosticPage() {
 
       {/* CTA */}
       <section className="section-padding section-dark">
-        <div className="mx-auto max-w-2xl text-center">
+        <div className="mx-auto max-w-md text-center">
           <h2 className="heading-lg !text-white">
             Ready to Analyse Your Writing?
           </h2>
-          <p className="mt-4 font-body text-lg text-navy-200">
+          <p className="mt-4 mb-8 font-body text-lg text-navy-200">
             Get a comprehensive diagnostic report for just{" "}
             <span className="font-semibold text-gold-500">$15</span>.
           </p>
-          <Link href="/diagnostics" className="btn-gold mt-8">
-            Purchase This Diagnostic
-          </Link>
+          <CheckoutButton diagnosticType="writing" price={15} />
         </div>
       </section>
     </main>

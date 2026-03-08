@@ -17,10 +17,14 @@ export async function GET(
 
     const supabase = createAdminClient();
 
+    // If it looks like a Stripe session ID, look up by stripe_session_id
+    const isStripeSession = orderId.startsWith("cs_");
+    const column = isStripeSession ? "stripe_session_id" : "id";
+
     const { data: order, error } = await supabase
       .from("orders")
-      .select("status, diagnostic_type, pdf_url")
-      .eq("id", orderId)
+      .select("id, status, diagnostic_type, exam_level, pdf_url")
+      .eq(column, orderId)
       .single();
 
     if (error || !order) {
@@ -30,11 +34,7 @@ export async function GET(
       );
     }
 
-    return NextResponse.json({
-      status: order.status,
-      diagnostic_type: order.diagnostic_type,
-      pdf_url: order.pdf_url,
-    });
+    return NextResponse.json(order);
   } catch (error) {
     console.error("Status check error:", error);
     return NextResponse.json(

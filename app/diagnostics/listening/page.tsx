@@ -4,10 +4,10 @@ import {
   ArrowLeft,
   CheckCircle2,
   Headphones,
-  ListChecks,
   MessageSquare,
   Shuffle,
 } from "lucide-react";
+import { CheckoutButton } from "@/components/diagnostics/CheckoutButton";
 
 export const metadata: Metadata = {
   title: "Listening Diagnostic | Pharos English Lab",
@@ -189,17 +189,15 @@ export default function ListeningDiagnosticPage() {
 
       {/* CTA */}
       <section className="section-padding section-dark">
-        <div className="mx-auto max-w-2xl text-center">
+        <div className="mx-auto max-w-md text-center">
           <h2 className="heading-lg !text-white">
             Ready to Test Your Listening Skills?
           </h2>
-          <p className="mt-4 font-body text-lg text-navy-200">
+          <p className="mt-4 mb-8 font-body text-lg text-navy-200">
             Get a comprehensive listening diagnostic for just{" "}
             <span className="font-semibold text-gold-500">$8</span>.
           </p>
-          <Link href="/diagnostics" className="btn-gold mt-8">
-            Purchase This Diagnostic
-          </Link>
+          <CheckoutButton diagnosticType="listening" price={8} />
         </div>
       </section>
     </main>
