@@ -32,7 +32,11 @@ export default function ContactPage() {
 
   const onSubmit = async (_data: ContactFormData) => {
     // Simulate submission delay — backend wiring comes later
-    await new Promise((resolve) => setTimeout(resolve, 800));
+    await fetch("/api/contact", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify(_data),
+});
     setSubmitted(true);
   };
 
@@ -59,10 +63,9 @@ export default function ContactPage() {
                   className="mb-4 h-14 w-14 text-gold-500"
                   strokeWidth={1.5}
                 />
-                <h2 className="heading-md">Message Sent</h2>
+                <h2 className="heading-md">Message received</h2>
                 <p className="mt-3 font-body text-navy-600">
-                  Thank you for reaching out. We will get back to you as soon as
-                  possible.
+                  Thank you for your message. I will get back to you soon to guide you with your next steps.
                 </p>
                 <Link href="/" className="btn-primary mt-8">
                   Back to Home
@@ -219,10 +222,10 @@ export default function ContactPage() {
                 </h3>
               </div>
               <a
-                href="mailto:hello@pharoslab.com"
+                href="mailto:pharosenglishlab@gmail.com"
                 className="font-body text-sm text-navy-600 underline decoration-navy-200 underline-offset-4 transition-colors hover:text-navy-900 hover:decoration-navy-500"
               >
-                hello@pharoslab.com
+                pharosenglishlab@gmail.com
               </a>
             </div>
 
@@ -240,10 +243,7 @@ export default function ContactPage() {
                 </h3>
               </div>
               <p className="font-body text-sm leading-relaxed text-navy-600">
-                Looking for one-on-one Cambridge exam preparation with an
-                experienced teacher? We offer private classes for B2 First and
-                C1 Advanced. Get in touch using the form or email us directly
-                to discuss availability and pricing.
+                Private classes are available as an optional follow-up for students who would like extra support after completing a diagnostic or practice session. If you are interested, get in touch to discuss availability.
               </p>
             </div>
           </div>

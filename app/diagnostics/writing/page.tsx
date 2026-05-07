@@ -1,220 +1,73 @@
-import type { Metadata } from "next";
-import Link from "next/link";
-import {
-  ArrowLeft,
-  FileEdit,
-  BarChart3,
-  Target,
-  BookOpen,
-} from "lucide-react";
-import { CheckoutButton } from "@/components/diagnostics/CheckoutButton";
-
-export const metadata: Metadata = {
-  title: "Writing Diagnostic | Pharos English Lab",
-  description:
-    "Get a detailed analysis of your Cambridge writing performance. Essay, letter, review, report, and article assessment against official Cambridge criteria.",
-};
-
-const writingTypes = [
-  { label: "Essay", description: "Formal argumentation and opinion development" },
-  { label: "Letter / Email", description: "Formal and informal correspondence" },
-  { label: "Review", description: "Evaluative writing with recommendation" },
-  { label: "Report", description: "Structured information with proposals" },
-  { label: "Article", description: "Engaging writing for a target audience" },
-];
-
-const cambridgeCriteria = [
-  {
-    title: "Content",
-    description:
-      "Has the candidate addressed all parts of the task? Is the target reader fully informed?",
-  },
-  {
-    title: "Communicative Achievement",
-    description:
-      "Is the writing appropriate for the task type? Does it hold the reader's attention and communicate ideas effectively?",
-  },
-  {
-    title: "Organisation",
-    description:
-      "Is the writing well-structured with clear paragraphing, cohesive devices, and logical progression?",
-  },
-  {
-    title: "Language",
-    description:
-      "Does the candidate use a range of vocabulary and grammatical structures accurately and appropriately?",
-  },
-];
-
-const whatYouReceive = [
-  {
-    icon: FileEdit,
-    title: "Corrected Version",
-    description:
-      "A fully corrected version of your writing with annotations explaining each correction and why it matters.",
-  },
-  {
-    icon: BarChart3,
-    title: "Band Scores",
-    description:
-      "Individual band scores for each of the four Cambridge criteria, giving you a clear picture of your strengths and weaknesses.",
-  },
-  {
-    icon: Target,
-    title: "Improvement Areas",
-    description:
-      "Prioritised areas for improvement with specific examples and suggestions drawn from your own writing.",
-  },
-  {
-    icon: BookOpen,
-    title: "Estimated Exam Score",
-    description:
-      "An overall estimated Cambridge exam score based on your performance, so you know where you stand.",
-  },
-];
-
 export default function WritingDiagnosticPage() {
   return (
-    <main>
-      {/* Hero */}
-      <section className="section-padding section-alt">
-        <div className="mx-auto max-w-4xl">
-          <Link
-            href="/diagnostics"
-            className="mb-8 inline-flex items-center gap-2 font-body text-sm text-navy-500 transition-colors hover:text-navy-700"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            All Diagnostics
-          </Link>
+    <main className="px-6 py-12 max-w-4xl mx-auto">
 
-          <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
-            <div>
-              <h1 className="heading-xl">Writing Diagnostic</h1>
-              <p className="mt-3 font-body text-lg text-navy-600">
-                Detailed analysis of your writing performance against Cambridge
-                criteria
-              </p>
-            </div>
-            <span className="inline-flex shrink-0 items-center self-start rounded-xl bg-gold-50 px-5 py-2.5 font-display text-3xl font-semibold text-gold-500">
-              $15
-            </span>
-          </div>
-        </div>
-      </section>
+      {/* BACK */}
+      <p className="mb-6 text-gray-500">← All Diagnostics</p>
 
-      {/* What it covers */}
-      <section className="section-padding">
-        <div className="mx-auto max-w-4xl">
-          <h2 className="heading-lg">What It Covers</h2>
-          <p className="mt-4 font-body text-navy-600">
-            Submit any Cambridge writing task type. Our diagnostic analyses your
-            work against the same criteria used by real Cambridge examiners.
-          </p>
+      {/* TITLE */}
+      <h1 className="text-4xl font-serif text-navy-800 mb-4">
+        Writing Diagnostic
+      </h1>
 
-          <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {writingTypes.map((type) => (
-              <div key={type.label} className="card p-5">
-                <h3 className="font-display text-lg font-medium text-navy-900">
-                  {type.label}
-                </h3>
-                <p className="mt-1 font-body text-sm text-navy-500">
-                  {type.description}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <p className="text-lg text-gray-600 mb-6">
+        Detailed analysis of your writing based on Cambridge criteria.
+      </p>
 
-      {/* How the analysis works */}
-      <section className="section-padding section-dark">
-        <div className="mx-auto max-w-4xl">
-          <h2 className="heading-lg !text-white">How the Analysis Works</h2>
-          <p className="mt-4 font-body text-navy-200">
-            Your writing is evaluated against the four official Cambridge
-            assessment criteria used for both B2 First and C1 Advanced exams.
-          </p>
+      {/* PRICE */}
+      <div className="bg-yellow-100 text-yellow-700 text-3xl font-bold px-6 py-4 rounded-xl mb-10">
+        $15 USD
+      </div>
 
-          <div className="mt-10 grid gap-6 sm:grid-cols-2">
-            {cambridgeCriteria.map((criterion, index) => (
-              <div
-                key={criterion.title}
-                className="rounded-xl border border-navy-700 bg-navy-800/50 p-6"
-              >
-                <div className="mb-3 flex items-center gap-3">
-                  <span className="flex h-8 w-8 items-center justify-center rounded-full bg-gold-500 font-body text-sm font-bold text-white">
-                    {index + 1}
-                  </span>
-                  <h3 className="font-display text-lg font-medium text-white">
-                    {criterion.title}
-                  </h3>
-                </div>
-                <p className="font-body text-sm leading-relaxed text-navy-300">
-                  {criterion.description}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* WHAT IT COVERS */}
+      <h2 className="text-2xl font-semibold mb-4">What It Covers</h2>
 
-      {/* What you receive */}
-      <section className="section-padding">
-        <div className="mx-auto max-w-4xl">
-          <h2 className="heading-lg">What You Receive</h2>
-          <p className="mt-4 font-body text-navy-600">
-            Every Writing Diagnostic report includes the following components,
-            designed to give you maximum insight into your exam readiness.
-          </p>
+      <ul className="mb-12 space-y-2 text-gray-700">
+        <li>• Essay</li>
+        <li>• Letter / Email</li>
+        <li>• Review</li>
+        <li>• Report</li>
+        <li>• Article</li>
+      </ul>
 
-          <div className="mt-10 grid gap-8 sm:grid-cols-2">
-            {whatYouReceive.map((item) => (
-              <div key={item.title} className="flex gap-4">
-                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-navy-50">
-                  <item.icon className="h-6 w-6 text-gold-500" strokeWidth={1.5} />
-                </div>
-                <div>
-                  <h3 className="font-display text-lg font-medium text-navy-900">
-                    {item.title}
-                  </h3>
-                  <p className="mt-1 font-body text-sm leading-relaxed text-navy-600">
-                    {item.description}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* STEP 1 */}
+      <div className="text-center mt-12">
 
-      {/* Exam levels */}
-      <section className="section-padding section-alt">
-        <div className="mx-auto max-w-4xl text-center">
-          <h2 className="heading-md">Available for Both Exam Levels</h2>
-          <div className="mt-6 flex justify-center gap-4">
-            <span className="inline-flex items-center rounded-lg bg-cambridge/20 px-4 py-2 font-body text-sm font-semibold text-navy-700">
-              B2 First
-            </span>
-            <span className="inline-flex items-center rounded-lg bg-cambridge/20 px-4 py-2 font-body text-sm font-semibold text-navy-700">
-              C1 Advanced
-            </span>
-          </div>
-        </div>
-      </section>
+        <p className="text-lg font-medium text-navy-700 mb-4">
+          Step 1 — Complete your payment
+        </p>
 
-      {/* CTA */}
-      <section className="section-padding section-dark">
-        <div className="mx-auto max-w-md text-center">
-          <h2 className="heading-lg !text-white">
-            Ready to Analyse Your Writing?
-          </h2>
-          <p className="mt-4 mb-8 font-body text-lg text-navy-200">
-            Get a comprehensive diagnostic report for just{" "}
-            <span className="font-semibold text-gold-500">$15</span>.
-          </p>
-          <CheckoutButton diagnosticType="writing" price={15} />
-        </div>
-      </section>
+        <a
+          href="https://paypal.me/pharosenglish/15"
+          target="_blank"
+          className="inline-block px-10 py-5 bg-yellow-500 text-white rounded-xl font-semibold text-lg hover:scale-105 transition"
+        >
+          Pay with PayPal
+        </a>
+
+      </div>
+
+      {/* STEP 2 */}
+      <div className="text-center mt-16">
+
+        <p className="text-lg font-medium text-navy-700 mb-2">
+          Step 2 — Submit your writing
+        </p>
+
+        <p className="text-sm text-gray-600 mb-6">
+          After payment, upload your writing using the form below
+        </p>
+
+        <a
+          href="https://docs.google.com/forms/d/e/1FAIpQLScNBspnvsQBaZovkv_ADSilTJiZ6RelDhaL46G_W_DhyHozkQ/viewform?usp=header"
+          target="_blank"
+          className="inline-block px-10 py-5 bg-navy-700 text-white rounded-xl font-semibold text-lg hover:scale-105 transition"
+        >
+          Submit your writing
+        </a>
+
+      </div>
+
     </main>
   );
 }
