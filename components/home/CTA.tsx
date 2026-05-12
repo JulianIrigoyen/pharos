@@ -4,7 +4,8 @@ export function CTA() {
   return (
     <section className="section-dark section-padding">
       <div className="mx-auto max-w-3xl text-center">
-        <h2 className="font-display text-3xl font-light tracking-tight text-white md:text-4xl lg:text-5xl">
+
+        <h2 className="font-body text-3xl font-light tracking-tight text-white md:text-4xl lg:text-5xl">
           Ready to know where you stand?
         </h2>
 
@@ -18,6 +19,7 @@ export function CTA() {
             Start Your Diagnostic
           </Link>
         </div>
+
       </div>
     </section>
   );

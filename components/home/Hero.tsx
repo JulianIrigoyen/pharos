@@ -1,40 +1,66 @@
+import Image from "next/image";
 import Link from "next/link";
 
 export function Hero() {
   return (
     <section className="section-dark section-padding relative overflow-hidden">
-      {/* Decorative lighthouse beam */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0"
-      >
-        <div className="absolute -top-32 right-0 h-[600px] w-[600px] rounded-full bg-gold-500/5 blur-3xl" />
-        <div className="absolute top-0 right-1/4 h-[400px] w-1 rotate-12 bg-gradient-to-b from-gold-400/30 via-gold-400/10 to-transparent blur-sm" />
-        <div className="absolute top-0 right-[27%] h-[350px] w-1 rotate-6 bg-gradient-to-b from-gold-400/20 via-gold-400/5 to-transparent blur-sm" />
-      </div>
+      
+      <div className="relative mx-auto max-w-5xl text-center">
 
-      <div className="relative mx-auto max-w-4xl text-center">
-        <h1 className="font-display text-4xl font-light tracking-tight text-white md:text-5xl lg:text-6xl">
-          Navigate Your Cambridge{" "}
-          <span className="text-gold-400">Exam Preparation</span>
+        {/* Lighthouse */}
+        <div className="mb-8 flex justify-center">
+          <Image
+            src="/hero-lighthouse.png"
+            alt="Pharos Lighthouse"
+            width={95}
+            height={95}
+            className="object-contain opacity-95"
+            priority
+          />
+        </div>
+
+        {/* Headline */}
+        <h1 className="font-body font-light tracking-tight text-white leading-[1.1] text-5xl md:text-6xl lg:text-7xl">
+          
+          <span className="block text-white">
+            Navigate Your
+          </span>
+
+          <span className="block text-gold-400">
+            Cambridge Exam Journey
+          </span>
+
         </h1>
 
-        <p className="mx-auto mt-6 max-w-2xl font-body text-lg leading-relaxed text-navy-200 md:text-xl">
-          AI-powered diagnostic reports for B2 First and C1 Advanced. Know
-          exactly where you stand&nbsp;&mdash; and how to improve.
+        {/* Subheadline */}
+        <p className="mx-auto mt-8 max-w-4xl font-body text-xl leading-relaxed text-navy-200 md:text-2xl">
+          Expert Cambridge diagnostics built on 30+ years of experience. Gain clarity,
+          direction, and the confidence to improve.
         </p>
 
-        <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
-          <Link href="/diagnostics" className="btn-gold">
-            View Diagnostics
-          </Link>
+        {/* Buttons */}
+        <div className="mt-12 flex flex-col items-center justify-center gap-5 sm:flex-row">
+
           <Link
-            href="#how-it-works"
-            className="inline-flex items-center justify-center rounded-lg border border-white/30 px-8 py-3.5 font-body text-sm uppercase tracking-wider text-white transition-colors duration-300 hover:border-white hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400 focus-visible:ring-offset-2 focus-visible:ring-offset-navy-900"
+            href="/readiness"
+            className="inline-flex items-center justify-center rounded-xl border border-white/30 px-10 py-4 font-body text-sm uppercase tracking-wider text-white transition-all duration-300 hover:border-white hover:bg-white/5"
           >
-            Learn More
+            Check Your Exam Readiness
           </Link>
+
+          <Link
+            href="/diagnostics"
+            className="btn-gold"
+          >
+            Explore Diagnostics
+          </Link>
+
         </div>
+
+        <p className="mt-8 font-body text-base text-navy-300">
+          Not sure where you stand? Start with a personalised readiness check.
+        </p>
+
       </div>
     </section>
   );

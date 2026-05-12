@@ -1,183 +1,220 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import {
-  ArrowLeft,
-  CheckCircle2,
-  BookOpen,
-  Puzzle,
-  Layers,
-  RefreshCw,
+  Check,
+  ClipboardList,
+  CreditCard,
+  Mail,
+  FileText,
+  Award,
 } from "lucide-react";
-import { CheckoutButton } from "@/components/diagnostics/CheckoutButton";
 
-export const metadata: Metadata = {
-  title: "Use of English Diagnostic | Pharos English Lab",
-  description:
-    "Detailed grammar and vocabulary analysis for Cambridge B2 First and C1 Advanced Use of English papers. Identify weaknesses and targeted improvement areas.",
-};
-
-const parts = [
+const STEPS = [
   {
-    icon: BookOpen,
-    title: "Multiple Choice Cloze",
-    description:
-      "Tests your understanding of vocabulary, collocations, idioms, phrasal verbs, and shades of meaning. We analyse which areas of vocabulary are strong and which need attention.",
+    title: "Pay",
+    description: "Complete payment.",
+    icon: CreditCard,
   },
   {
-    icon: Puzzle,
-    title: "Open Cloze",
-    description:
-      "Assesses your knowledge of grammatical structures, linking words, and fixed phrases. Our report pinpoints the grammar patterns that are causing errors.",
+    title: "Email",
+    description: "Send receipt.",
+    icon: Mail,
   },
   {
-    icon: Layers,
-    title: "Word Formation",
-    description:
-      "Evaluates your ability to form words using prefixes, suffixes, and internal changes. We identify which word families and formation rules need revision.",
+    title: "Paper",
+    description: "Receive exam.",
+    icon: ClipboardList,
   },
   {
-    icon: RefreshCw,
-    title: "Key Word Transformations",
-    description:
-      "Tests your ability to rephrase sentences using a given key word. This part combines grammar and vocabulary knowledge, and our analysis reveals structural gaps.",
+    title: "Submit",
+    description: "Upload answers.",
+    icon: FileText,
+  },
+  {
+    title: "Feedback",
+    description: "Receive report.",
+    icon: Award,
   },
 ];
 
-const analysisReveals = [
-  "Grammar patterns causing repeated errors",
-  "Vocabulary gaps by topic and word family",
-  "Common collocations and phrasal verbs you need to learn",
-  "Word formation rules that need reinforcement",
-  "Sentence transformation structures to practise",
-  "Part-by-part score breakdown with exam-day prediction",
-];
-
-export default function UseOfEnglishDiagnosticPage() {
+export default function UseOfEnglishPage() {
   return (
-    <main>
-      {/* Hero */}
-      <section className="section-padding section-alt">
-        <div className="mx-auto max-w-4xl">
+    <main className="bg-slate-50">
+
+      {/* CARD */}
+      <section className="mx-auto max-w-3xl px-6 pt-14">
+
+        <div className="rounded-[24px] border border-slate-200 bg-white p-5 md:p-6 shadow-sm">
+
+          <div className="grid gap-6 md:grid-cols-[1fr_100px] items-center">
+
+            <div>
+
+              <h1 className="font-body text-2xl font-semibold md:text-4xl text-navy-900">
+                Use of English Diagnostic
+              </h1>
+
+              <div className="mt-3 h-[3px] w-12 rounded bg-gold-500" />
+
+              <p className="mt-4 text-sm md:text-base text-navy-700 leading-relaxed">
+                Identify your grammar, vocabulary and transformation weaknesses.
+              </p>
+
+              <h2 className="mt-6 font-body text-xl font-semibold md:text-2xl text-navy-900">
+                What It Covers
+              </h2>
+
+              <div className="mt-4 grid md:grid-cols-2 gap-x-6 gap-y-2 text-sm text-navy-800">
+
+                <div className="flex items-center gap-2">
+                  <Check size={14} className="text-gold-500" />
+                  Open cloze
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <Check size={14} className="text-gold-500" />
+                  Word formation
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <Check size={14} className="text-gold-500" />
+                  Key word transformations
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <Check size={14} className="text-gold-500" />
+                  Error analysis
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <Check size={14} className="text-gold-500" />
+                  Strategy feedback
+                </div>
+
+              </div>
+
+            </div>
+
+            {/* PRICE */}
+            <div className="mx-auto">
+
+              <div className="flex h-24 w-24 flex-col items-center justify-center rounded-2xl bg-gold-50 border border-gold-200">
+
+                <span className="text-2xl font-semibold text-gold-500">
+                  $8
+                </span>
+
+                <span className="text-xs tracking-wide text-gold-500">
+                  USD
+                </span>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      {/* FLOW */}
+      <section className="mx-auto max-w-6xl px-6 py-12">
+
+        <h2 className="mb-12 text-center font-body text-3xl font-semibold text-navy-900">
+          How It Works
+        </h2>
+
+        <div className="grid gap-8 lg:grid-cols-5">
+
+          {STEPS.map((step, index) => {
+            const Icon = step.icon;
+
+            return (
+              <div
+                key={index}
+                className="relative flex flex-col items-center text-center"
+              >
+
+                {index < STEPS.length - 1 && (
+                  <div className="absolute left-[58%] top-[66px] hidden h-[2px] w-full bg-navy-900 lg:block" />
+                )}
+
+                <span className="mb-3 text-xs font-medium tracking-[0.2em] text-gold-500">
+                  0{index + 1}
+                </span>
+
+                <div className="relative z-10 flex h-14 w-14 items-center justify-center rounded-full border border-slate-200 bg-white shadow-sm">
+
+                  <Icon
+                    className="h-5 w-5 text-gold-500"
+                    strokeWidth={1.8}
+                  />
+
+                </div>
+
+                <h3 className="mt-4 font-body text-lg font-semibold text-navy-900">
+                  {step.title}
+                </h3>
+
+                <p className="mt-1 text-xs text-navy-700">
+                  {step.description}
+                </p>
+
+              </div>
+            );
+          })}
+
+        </div>
+
+      </section>
+
+
+      {/* ACTIONS */}
+      <section className="mx-auto max-w-xl px-6 pb-16 text-center">
+
+        <a
+          href="#"
+          className="inline-flex h-11 w-56 items-center justify-center rounded-xl bg-gold-500 text-sm font-medium text-white hover:bg-gold-600"
+        >
+          Pay with PayPal
+        </a>
+
+        <p className="mt-6 text-sm text-navy-700 leading-relaxed">
+          After payment, please write an email to this address and include:
+          payment receipt, full name and exam level.
+        </p>
+
+        <p className="mt-2 text-lg font-medium text-navy-900">
+          pharosenglishlab@gmail.com
+        </p>
+
+        <h3 className="mt-10 font-body text-2xl font-semibold text-navy-900">
+          Submit Answers
+        </h3>
+
+        <div className="mt-5 flex flex-col items-center gap-3">
+
           <Link
-            href="/diagnostics"
-            className="mb-8 inline-flex items-center gap-2 font-body text-sm text-navy-500 transition-colors hover:text-navy-700"
+            href="https://docs.google.com/forms/d/e/1FAIpQLSeFIiWLRWTaqgg1GwnUYevOHAl1WE7EM1pXnfH8tNq8RiOtfg/viewform?usp=header"
+            target="_blank"
+            className="inline-flex h-11 w-56 items-center justify-center rounded-xl bg-navy-900 text-sm text-white hover:bg-navy-800"
           >
-            <ArrowLeft className="h-4 w-4" />
-            All Diagnostics
+            B2 First
           </Link>
 
-          <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
-            <div>
-              <h1 className="heading-xl">Use of English Diagnostic</h1>
-              <p className="mt-3 font-body text-lg text-navy-600">
-                Grammar, vocabulary and structure analysis for Cambridge exam
-                readiness
-              </p>
-            </div>
-            <span className="inline-flex shrink-0 items-center self-start rounded-xl bg-gold-50 px-5 py-2.5 font-display text-3xl font-semibold text-gold-500">
-              $8
-            </span>
-          </div>
+          <Link
+            href="https://docs.google.com/forms/d/e/1FAIpQLSfQD54FjKso0BVPmQGjuBrEbGP7R9tc9JzBQe8uLhCrYU-MPA/viewform?usp=header"
+            target="_blank"
+            className="inline-flex h-11 w-56 items-center justify-center rounded-xl bg-navy-900 text-sm text-white hover:bg-navy-800"
+          >
+            C1 Advanced
+          </Link>
+
         </div>
+
       </section>
 
-      {/* Parts covered */}
-      <section className="section-padding">
-        <div className="mx-auto max-w-4xl">
-          <h2 className="heading-lg">Parts Covered</h2>
-          <p className="mt-4 font-body text-navy-600">
-            The Use of English paper tests your command of grammar and
-            vocabulary across four distinct parts. Our diagnostic analyses your
-            performance in each one.
-          </p>
-
-          <div className="mt-10 grid gap-8 sm:grid-cols-2">
-            {parts.map((part, index) => (
-              <div key={part.title} className="card p-6">
-                <div className="mb-4 flex items-center gap-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-navy-50">
-                    <part.icon
-                      className="h-5 w-5 text-gold-500"
-                      strokeWidth={1.5}
-                    />
-                  </div>
-                  <div>
-                    <span className="font-body text-xs font-semibold uppercase tracking-wider text-navy-400">
-                      Part {index + 1}
-                    </span>
-                    <h3 className="font-display text-lg font-medium text-navy-900">
-                      {part.title}
-                    </h3>
-                  </div>
-                </div>
-                <p className="font-body text-sm leading-relaxed text-navy-600">
-                  {part.description}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* What the analysis reveals */}
-      <section className="section-padding section-dark">
-        <div className="mx-auto max-w-4xl">
-          <h2 className="heading-lg !text-white">
-            What the Analysis Reveals
-          </h2>
-          <p className="mt-4 font-body text-navy-200">
-            Our diagnostic goes beyond simple right-or-wrong marking. It
-            identifies the underlying patterns in your errors so you can study
-            more effectively.
-          </p>
-
-          <ul className="mt-10 grid gap-4 sm:grid-cols-2">
-            {analysisReveals.map((item) => (
-              <li key={item} className="flex items-start gap-3">
-                <CheckCircle2
-                  className="mt-0.5 h-5 w-5 shrink-0 text-gold-500"
-                  strokeWidth={2}
-                />
-                <span className="font-body text-sm text-navy-100">{item}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
-
-      {/* Exam levels */}
-      <section className="section-padding section-alt">
-        <div className="mx-auto max-w-4xl text-center">
-          <h2 className="heading-md">Available for Both Exam Levels</h2>
-          <p className="mt-3 font-body text-navy-600">
-            The Use of English paper differs between B2 First and C1 Advanced.
-            Select your exam level when you purchase, and you will receive the
-            appropriate paper.
-          </p>
-          <div className="mt-6 flex justify-center gap-4">
-            <span className="inline-flex items-center rounded-lg bg-cambridge/20 px-4 py-2 font-body text-sm font-semibold text-navy-700">
-              B2 First
-            </span>
-            <span className="inline-flex items-center rounded-lg bg-cambridge/20 px-4 py-2 font-body text-sm font-semibold text-navy-700">
-              C1 Advanced
-            </span>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section className="section-padding section-dark">
-        <div className="mx-auto max-w-md text-center">
-          <h2 className="heading-lg !text-white">
-            Ready to Test Your Grammar &amp; Vocabulary?
-          </h2>
-          <p className="mt-4 mb-8 font-body text-lg text-navy-200">
-            Get a comprehensive Use of English diagnostic for just{" "}
-            <span className="font-semibold text-gold-500">$8</span>.
-          </p>
-          <CheckoutButton diagnosticType="use-of-english" price={8} />
-        </div>
-      </section>
     </main>
   );
 }

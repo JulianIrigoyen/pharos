@@ -1,6 +1,11 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import {
+  Compass,
+  CheckCircle2,
+  Sparkles,
+} from "lucide-react";
 
 type Question = {
   type: "self" | "task";
@@ -116,31 +121,6 @@ const useOfEnglishBank: Question[] = [
       "wishes she would study",
     ],
   },
-  {
-    type: "task",
-    question: "Use of English",
-    prompt:
-      "I didn’t realise how difficult the exam would be.\n\nKeyword: HAD\n\nIf __________ how difficult the exam would be, I would have prepared differently.",
-    scores: [3, 0, 0, 0],
-    options: [
-      "I had realised",
-      "I would realise",
-      "I realised",
-      "I have realised",
-    ],
-  },
-  {
-    type: "task",
-    question: "Use of English",
-    prompt: "Choose the most natural sentence:",
-    scores: [0, 0, 3, 0],
-    options: [
-      "committed several mistakes",
-      "did several mistakes",
-      "made several mistakes",
-      "performed several mistakes",
-    ],
-  },
 ];
 
 const readingBank: Question[] = [
@@ -157,32 +137,6 @@ const readingBank: Question[] = [
       "Strategy is not important.",
     ],
   },
-  {
-    type: "task",
-    question: "Reading",
-    prompt:
-      "Some students revise intensively but avoid practising under timed conditions. As a result, their knowledge may not translate into effective exam performance.",
-    scores: [0, 3, 0, 0],
-    options: [
-      "Studying a lot always leads to success.",
-      "Timed practice can reveal performance issues.",
-      "Exam timing is less important than vocabulary.",
-      "Students should avoid timed practice.",
-    ],
-  },
-  {
-    type: "task",
-    question: "Reading",
-    prompt:
-      "A candidate may understand every word in a text and still choose the wrong answer if they miss the writer’s attitude or purpose.",
-    scores: [0, 3, 0, 0],
-    options: [
-      "Reading is only about vocabulary.",
-      "Understanding words is not always enough.",
-      "Writer attitude is irrelevant.",
-      "C1 texts are impossible to understand.",
-    ],
-  },
 ];
 
 const writingBank: Question[] = [
@@ -192,28 +146,8 @@ const writingBank: Question[] = [
     prompt: "Which introduction is more appropriate for a C1 essay?",
     scores: [0, 3],
     options: [
-      "People argue that practical skills are more important than academic knowledge, and this essay will examine both perspectives.",
-      "It is often argued that practical skills are more important than academic knowledge, an issue that continues to generate debate in educational contexts.",
-    ],
-  },
-  {
-    type: "task",
-    question: "Writing",
-    prompt: "Which sentence shows better C1-level precision?",
-    scores: [0, 3],
-    options: [
-      "People should make more efforts to protect the environment.",
-      "People should make a greater effort to protect the environment.",
-    ],
-  },
-  {
-    type: "task",
-    question: "Writing",
-    prompt: "Which sentence is more suitable for a formal essay?",
-    scores: [0, 3],
-    options: [
-      "This issue is quite complex and people have different opinions about it.",
-      "This issue is complex, and opinions on it vary considerably.",
+      "People argue that practical skills are more important than academic knowledge.",
+      "It is often argued that practical skills are more important than academic knowledge.",
     ],
   },
 ];
@@ -222,54 +156,33 @@ function pickRandom<T>(arr: T[]) {
   return arr[Math.floor(Math.random() * arr.length)];
 }
 
-function getReadinessProfile(score: number, performanceScore: number) {
-  if (score >= 80 && performanceScore >= 70) {
-    return {
-      profile: "Near Exam Ready",
-      message:
-        "You show strong exam awareness and stable performance habits. Your mini task performance also suggests good exam precision.",
-    };
-  }
-
-  if (score >= 65 && performanceScore < 60) {
-    return {
-      profile: "High Confidence, Needs Evidence",
-      message:
-        "Your self-assessment suggests confidence, but your mini task performance indicates that your real exam precision may need checking.",
-    };
+function getReadinessProfile(score: number) {
+  if (score >= 80) {
+    return "Near Exam Ready";
   }
 
   if (score >= 60) {
-    return {
-      profile: "High Potential, Needs Calibration",
-      message:
-        "You likely have a solid foundation, but your exam performance may need clearer calibration under real exam conditions.",
-    };
+    return "High Potential, Needs Calibration";
   }
 
   if (score >= 40) {
-    return {
-      profile: "Inconsistent Performer",
-      message:
-        "Your performance may vary across tasks or under time pressure.",
-    };
+    return "Inconsistent Performer";
   }
 
-  return {
-    profile: "Developing Candidate",
-    message:
-      "You may still need to strengthen exam awareness and performance habits.",
-  };
+  return "Developing Candidate";
 }
 
 export default function ReadinessPage() {
+  const [started, setStarted] = useState(false);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState<number[]>([]);
   const [showForm, setShowForm] = useState(false);
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [submitted, setSubmitted] = useState(false);
+
   const [sending, setSending] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
 
   const questions = useMemo(() => {
     return [
@@ -281,7 +194,9 @@ export default function ReadinessPage() {
   }, []);
 
   function handleAnswer(index: number) {
-    setAnswers([...answers, index]);
+    const updated = [...answers, index];
+
+    setAnswers(updated);
 
     if (currentQuestion < questions.length - 1) {
       setCurrentQuestion(currentQuestion + 1);
@@ -299,148 +214,220 @@ export default function ReadinessPage() {
       return sum + Math.max(...q.scores);
     }, 0);
 
-    const taskIndexes = questions
-      .map((q, i) => (q.type === "task" ? i : -1))
-      .filter((i) => i !== -1);
-
-    const taskScore = taskIndexes.reduce((sum, i) => {
-      return sum + questions[i].scores[answers[i]];
-    }, 0);
-
-    const maxTaskScore = taskIndexes.reduce((sum, i) => {
-      return sum + Math.max(...questions[i].scores);
-    }, 0);
-
     const readinessScore = Math.round((totalScore / maxScore) * 100);
-    const performanceScore = Math.round((taskScore / maxTaskScore) * 100);
 
-    const result = getReadinessProfile(readinessScore, performanceScore);
-
-    return { readinessScore, performanceScore, result };
+    return {
+      readinessScore,
+      profile: getReadinessProfile(readinessScore),
+    };
   }
 
   async function handleSubmit() {
-    if (!email) return;
-
     setSending(true);
 
-    const { readinessScore, performanceScore, result } = calculateResult();
+    const result = calculateResult();
 
-    try {
-      await fetch("/api/readiness", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name,
-          email,
-          profile: result.profile,
-          readinessScore,
-          message: `${result.message}<br><br>Mini task performance: ${performanceScore}%.`,
-        }),
-      });
+    await fetch("/api/readiness", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name,
+        email,
+        profile: result.profile,
+        readinessScore: result.readinessScore,
+      }),
+    });
 
-      setSubmitted(true);
-    } catch (e) {
-      console.error(e);
-    } finally {
-      setSending(false);
-    }
+    setSubmitted(true);
+    setSending(false);
   }
 
-  if (showForm && submitted) {
+  if (!started) {
     return (
-      <main style={{ padding: "56px 24px", maxWidth: "760px", margin: "0 auto" }}>
-        <h1>Check your inbox</h1>
-        <p style={{ fontSize: "22px", marginTop: "20px" }}>
-          Your C1 Readiness Profile has been sent to your email.
-        </p>
-        <p style={{ fontSize: "16px", color: "#6b7280" }}>
-          If you don’t see it, check your spam folder.
-        </p>
+      <main className="min-h-screen px-6 py-16">
+
+        <div className="mx-auto max-w-4xl">
+
+          <div className="text-center">
+
+            <Compass className="mx-auto h-16 w-16 text-gold-500 mb-6" />
+
+            <h1 className="font-display text-4xl text-navy-900">
+              Pharos Readiness Assessment
+            </h1>
+
+            <p className="mx-auto mt-6 max-w-2xl text-lg text-navy-600">
+              Discover where you currently stand before investing in diagnostics or exam preparation.
+            </p>
+
+          </div>
+
+          <div className="mt-16 grid gap-6 md:grid-cols-2">
+
+            <div className="rounded-2xl border border-gold-200 bg-gold-50 p-8 text-center">
+              <CheckCircle2 className="mx-auto h-8 w-8 text-gold-600 mb-4" />
+              <h3 className="font-display text-xl text-navy-900">
+                C1 Advanced
+              </h3>
+              <p className="mt-2 text-sm text-navy-600">
+                Available now
+              </p>
+            </div>
+
+            <div className="rounded-2xl border border-navy-100 bg-navy-50 p-8 text-center opacity-80">
+              <Sparkles className="mx-auto h-8 w-8 text-gold-500 mb-4" />
+              <h3 className="font-display text-xl text-navy-900">
+                B2 First
+              </h3>
+              <p className="mt-2 text-sm text-navy-600">
+                Launching Soon
+              </p>
+            </div>
+
+          </div>
+
+          <div className="text-center mt-16">
+
+            <button
+              onClick={() => setStarted(true)}
+              className="btn-gold px-10"
+            >
+              Start My Assessment
+            </button>
+
+          </div>
+
+        </div>
+
       </main>
     );
   }
 
-  if (showForm) {
+  if (showForm && !submitted) {
     return (
-      <main style={{ padding: "56px 24px", maxWidth: "760px", margin: "0 auto" }}>
-        <h1>Get Your Personal C1 Readiness Profile</h1>
+      <main className="min-h-screen px-6 py-16">
 
-        <p style={{ fontSize: "18px", marginTop: "16px" }}>
-          Receive a clear, expert-level snapshot of your current performance — and what to focus on next before the exam.
-        </p>
+        <div className="mx-auto max-w-xl">
 
-        <div style={{ display: "grid", gap: "16px", marginTop: "32px" }}>
-          <input
-            placeholder="Your name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            style={{ padding: "16px", borderRadius: "12px", border: "1px solid #ccc" }}
-          />
+          <h1 className="font-display text-3xl text-navy-900 text-center mb-10">
+            Receive Your Results
+          </h1>
 
-          <input
-            placeholder="Your email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            style={{ padding: "16px", borderRadius: "12px", border: "1px solid #ccc" }}
-          />
+          <div className="grid gap-4">
 
-          <button
-            onClick={handleSubmit}
-            disabled={sending}
-            style={{
-              padding: "16px",
-              borderRadius: "12px",
-              background: "#d9a22b",
-              color: "white",
-              fontWeight: "bold",
-              border: "none",
-            }}
-          >
-            {sending ? "Sending..." : "Get my results"}
-          </button>
+            <input
+              placeholder="Your name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="input-field"
+            />
 
-          <p style={{ fontSize: "14px", color: "#6b7280" }}>
-            No spam. Just your results.
-          </p>
+            <input
+              placeholder="Your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="input-field"
+            />
+
+            <button
+              onClick={handleSubmit}
+              disabled={sending}
+              className="btn-gold"
+            >
+              {sending ? "Sending..." : "Get My Results"}
+            </button>
+
+          </div>
+
         </div>
+
+      </main>
+    );
+  }
+
+  if (submitted) {
+    return (
+      <main className="min-h-screen px-6 py-20">
+
+        <div className="mx-auto max-w-2xl text-center">
+
+          <h1 className="font-display text-3xl text-navy-900">
+            Your Pharos Readiness Profile Is On Its Way
+          </h1>
+
+          <p className="mt-6 text-navy-600">
+            Please check your inbox.
+          </p>
+
+          <div className="mt-12 text-sm text-navy-500">
+            <p>Marcela Liporace Murga</p>
+            <p>Founder & Academic Director</p>
+            <p>Pharos English Lab</p>
+          </div>
+
+        </div>
+
       </main>
     );
   }
 
   const question = questions[currentQuestion];
 
+  const progress =
+    ((currentQuestion + 1) / questions.length) * 100;
+
   return (
-    <main style={{ padding: "56px 24px", maxWidth: "860px", margin: "0 auto" }}>
-      <p>Question {currentQuestion + 1} of {questions.length}</p>
+    <main className="min-h-screen px-6 py-16">
 
-      <h1 style={{ marginBottom: "24px" }}>C1 Readiness Check</h1>
+      <div className="mx-auto max-w-3xl">
 
-      <h2 style={{ marginBottom: "16px" }}>{question.question}</h2>
+        <div className="text-center mb-10">
 
-      {question.prompt && (
-        <div style={{ marginBottom: "20px" }}>
-          {question.prompt}
+          <p className="text-sm text-navy-500">
+            Question {currentQuestion + 1} of {questions.length}
+          </p>
+
+          <div className="mt-4 h-2 rounded-full bg-navy-100 overflow-hidden">
+            <div
+              className="h-full bg-gold-500 transition-all duration-500"
+              style={{ width: `${progress}%` }}
+            />
+          </div>
+
         </div>
-      )}
 
-      <div style={{ display: "grid", gap: "12px" }}>
-        {question.options.map((opt, i) => (
-          <button
-            key={opt}
-            onClick={() => handleAnswer(i)}
-            style={{
-              padding: "16px",
-              textAlign: "left",
-              borderRadius: "12px",
-              border: "1px solid #ccc",
-              background: "white",
-            }}
-          >
-            {opt}
-          </button>
-        ))}
+        <div className="card p-10">
+
+          <h2 className="font-display text-2xl text-navy-900 mb-8">
+            {question.question}
+          </h2>
+
+          {question.prompt && (
+            <div className="mb-8 whitespace-pre-line text-navy-700">
+              {question.prompt}
+            </div>
+          )}
+
+          <div className="grid gap-4">
+
+            {question.options.map((option, i) => (
+              <button
+                key={option}
+                onClick={() => handleAnswer(i)}
+                className="rounded-2xl border border-navy-200 bg-white p-5 text-left text-navy-700 transition-all duration-300 hover:border-gold-500 hover:bg-gold-50"
+              >
+                {option}
+              </button>
+            ))}
+
+          </div>
+
+        </div>
+
       </div>
+
     </main>
   );
 }

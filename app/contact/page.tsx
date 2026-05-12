@@ -16,8 +16,8 @@ interface ContactFormData {
 const subjectOptions = [
   { value: "", label: "Select a subject" },
   { value: "general", label: "General Inquiry" },
-  { value: "classes", label: "Private Classes" },
   { value: "diagnostic", label: "Diagnostic Question" },
+  { value: "consultation", label: "Private Consultation" },
   { value: "other", label: "Other" },
 ];
 
@@ -31,45 +31,57 @@ export default function ContactPage() {
   } = useForm<ContactFormData>();
 
   const onSubmit = async (_data: ContactFormData) => {
-    // Simulate submission delay — backend wiring comes later
     await fetch("/api/contact", {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify(_data),
-});
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(_data),
+    });
+
     setSubmitted(true);
   };
 
   return (
     <main>
+
       {/* Hero */}
       <section className="section-padding section-alt">
         <div className="mx-auto max-w-4xl text-center">
+
           <h1 className="heading-xl">Get in Touch</h1>
+
           <p className="mx-auto mt-6 max-w-2xl font-body text-lg leading-relaxed text-navy-600">
-            Have a question about our diagnostics, private classes, or anything
-            else? We would love to hear from you.
+            Have a question about diagnostics, consultations, or your Cambridge preparation? I would be happy to help.
           </p>
+
         </div>
       </section>
 
       <section className="section-padding">
         <div className="mx-auto grid max-w-5xl gap-14 lg:grid-cols-5">
+
           {/* Contact form */}
           <div className="lg:col-span-3">
+
             {submitted ? (
               <div className="card flex flex-col items-center p-10 text-center">
+
                 <CheckCircle2
                   className="mb-4 h-14 w-14 text-gold-500"
                   strokeWidth={1.5}
                 />
-                <h2 className="heading-md">Message received</h2>
+
+                <h2 className="heading-md">
+                  Message received
+                </h2>
+
                 <p className="mt-3 font-body text-navy-600">
-                  Thank you for your message. I will get back to you soon to guide you with your next steps.
+                  Thank you for your message. I will get back to you soon.
                 </p>
+
                 <Link href="/" className="btn-primary mt-8">
                   Back to Home
                 </Link>
+
               </div>
             ) : (
               <form
@@ -77,6 +89,7 @@ export default function ContactPage() {
                 className="space-y-6"
                 noValidate
               >
+
                 {/* Name */}
                 <div>
                   <label
@@ -85,6 +98,7 @@ export default function ContactPage() {
                   >
                     Name
                   </label>
+
                   <input
                     id="name"
                     type="text"
@@ -93,13 +107,17 @@ export default function ContactPage() {
                       errors.name && "!border-red-400 !ring-red-400/20"
                     )}
                     placeholder="Your name"
-                    {...register("name", { required: "Name is required" })}
+                    {...register("name", {
+                      required: "Name is required",
+                    })}
                   />
+
                   {errors.name && (
                     <p className="mt-1 font-body text-xs text-red-500">
                       {errors.name.message}
                     </p>
                   )}
+
                 </div>
 
                 {/* Email */}
@@ -110,6 +128,7 @@ export default function ContactPage() {
                   >
                     Email
                   </label>
+
                   <input
                     id="email"
                     type="email"
@@ -126,11 +145,13 @@ export default function ContactPage() {
                       },
                     })}
                   />
+
                   {errors.email && (
                     <p className="mt-1 font-body text-xs text-red-500">
                       {errors.email.message}
                     </p>
                   )}
+
                 </div>
 
                 {/* Subject */}
@@ -141,6 +162,7 @@ export default function ContactPage() {
                   >
                     Subject
                   </label>
+
                   <select
                     id="subject"
                     className={clsx(
@@ -152,16 +174,21 @@ export default function ContactPage() {
                     })}
                   >
                     {subjectOptions.map((option) => (
-                      <option key={option.value} value={option.value}>
+                      <option
+                        key={option.value}
+                        value={option.value}
+                      >
                         {option.label}
                       </option>
                     ))}
                   </select>
+
                   {errors.subject && (
                     <p className="mt-1 font-body text-xs text-red-500">
                       {errors.subject.message}
                     </p>
                   )}
+
                 </div>
 
                 {/* Message */}
@@ -172,6 +199,7 @@ export default function ContactPage() {
                   >
                     Message
                   </label>
+
                   <textarea
                     id="message"
                     rows={5}
@@ -179,7 +207,7 @@ export default function ContactPage() {
                       "input-field resize-y",
                       errors.message && "!border-red-400 !ring-red-400/20"
                     )}
-                    placeholder="How can we help you?"
+                    placeholder="How can I help you?"
                     {...register("message", {
                       required: "Message is required",
                       minLength: {
@@ -188,11 +216,13 @@ export default function ContactPage() {
                       },
                     })}
                   />
+
                   {errors.message && (
                     <p className="mt-1 font-body text-xs text-red-500">
                       {errors.message.message}
                     </p>
                   )}
+
                 </div>
 
                 <button
@@ -205,32 +235,43 @@ export default function ContactPage() {
                 >
                   {isSubmitting ? "Sending..." : "Send Message"}
                 </button>
+
               </form>
             )}
+
           </div>
 
-          {/* Sidebar info */}
+          {/* Sidebar */}
           <div className="space-y-8 lg:col-span-2">
+
             {/* Email */}
             <div className="card p-6">
+
               <div className="mb-3 flex items-center gap-3">
                 <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-navy-50">
-                  <Mail className="h-5 w-5 text-gold-500" strokeWidth={1.5} />
+                  <Mail
+                    className="h-5 w-5 text-gold-500"
+                    strokeWidth={1.5}
+                  />
                 </div>
+
                 <h3 className="font-display text-lg font-medium text-navy-900">
-                  Email Us
+                  Email
                 </h3>
               </div>
+
               <a
                 href="mailto:pharosenglishlab@gmail.com"
                 className="font-body text-sm text-navy-600 underline decoration-navy-200 underline-offset-4 transition-colors hover:text-navy-900 hover:decoration-navy-500"
               >
                 pharosenglishlab@gmail.com
               </a>
+
             </div>
 
-            {/* Private classes */}
+            {/* Consultation */}
             <div className="card p-6">
+
               <div className="mb-3 flex items-center gap-3">
                 <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-navy-50">
                   <BookOpen
@@ -238,17 +279,31 @@ export default function ContactPage() {
                     strokeWidth={1.5}
                   />
                 </div>
+
                 <h3 className="font-display text-lg font-medium text-navy-900">
-                  Private Classes
+                  Need Extra Guidance?
                 </h3>
               </div>
+
               <p className="font-body text-sm leading-relaxed text-navy-600">
-                Private classes are available as an optional follow-up for students who would like extra support after completing a diagnostic or practice session. If you are interested, get in touch to discuss availability.
+                Some students may feel that after receiving their diagnostic report, they would benefit from more personalised support and expert guidance.
               </p>
+
+              <p className="mt-4 font-body text-sm leading-relaxed text-navy-600">
+                Private 45-minute 1:1 consultation sessions can be booked separately upon request. To enquire about availability, simply select "Private Consultation" in the Subject field of the form on the left.
+              </p>
+
+              <p className="mt-4 font-body text-sm leading-relaxed text-navy-600">
+                These sessions are designed to clarify feedback, answer specific questions, and help you focus on the areas that will have the greatest impact on your exam performance.
+              </p>
+
             </div>
+
           </div>
+
         </div>
       </section>
+
     </main>
   );
 }

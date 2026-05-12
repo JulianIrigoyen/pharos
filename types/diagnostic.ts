@@ -1,4 +1,4 @@
-export type DiagnosticType = "writing" | "use-of-english" | "listening";
+export type DiagnosticType = "writing" | "use-of-english";
 export type ExamLevel = "B2" | "C1";
 
 export interface Diagnostic {
@@ -41,22 +41,6 @@ export const DIAGNOSTICS: Diagnostic[] = [
       "Word formation assessment",
       "Key word transformations review",
       "Targeted grammar improvement areas",
-    ],
-    examLevels: ["B2", "C1"],
-  },
-  {
-    slug: "listening",
-    title: "Listening Diagnostic",
-    subtitle: "Comprehension & strategy assessment",
-    description:
-      "Complete a listening exam and receive analysis of your listening accuracy, paraphrase recognition, and exam strategy effectiveness.",
-    price: 8,
-    features: [
-      "Listening accuracy breakdown",
-      "Paraphrase recognition analysis",
-      "Exam strategy evaluation",
-      "Part-by-part performance",
-      "Targeted improvement suggestions",
     ],
     examLevels: ["B2", "C1"],
   },
