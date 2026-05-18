@@ -8,8 +8,9 @@ import clsx from "clsx";
 
 const navLinks = [
   { href: "/", label: "Home" },
-  { href: "/diagnostics", label: "Diagnostics" },
   { href: "/about", label: "About" },
+  { href: "/readiness", label: "Readiness" },
+  { href: "/diagnostics", label: "Diagnostics" },
   { href: "/contact", label: "Contact" },
 ];
 
@@ -37,16 +38,39 @@ export function Header() {
     };
   }, [mobileOpen]);
 
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(min-width: 1024px)");
+
+    const syncMenuState = (
+      event: MediaQueryListEvent | MediaQueryList
+    ) => {
+      if (event.matches) {
+        setMobileOpen(false);
+      }
+    };
+
+    syncMenuState(mediaQuery);
+
+    const handleChange = (event: MediaQueryListEvent) => {
+      syncMenuState(event);
+    };
+
+    mediaQuery.addEventListener("change", handleChange);
+
+    return () => {
+      mediaQuery.removeEventListener("change", handleChange);
+    };
+  }, []);
+
   return (
     <header
       className={clsx(
-        "sticky top-0 z-50 w-full bg-white transition-shadow duration-300",
-        scrolled && "shadow-sm"
+        "sticky top-0 z-50 w-full border-b border-transparent bg-white/95 backdrop-blur transition-all duration-300",
+        scrolled && "border-navy-100 shadow-sm"
       )}
     >
-      <nav className="mx-auto flex max-w-7xl items-center justify-between px-8 py-2 lg:px-8">
+      <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 md:px-8 lg:px-8">
 
-        {/* Logo */}
         <Link
           href="/"
           aria-label="Pharos English Lab home"
@@ -58,17 +82,16 @@ export function Header() {
             width={1000}
             height={300}
             priority
-        className="h-[110px] w-auto object-contain" 
+            className="h-12 w-auto object-contain sm:h-14 md:h-16 lg:h-[68px] xl:h-[74px]"
           />
         </Link>
 
-        {/* Desktop Navigation */}
-        <ul className="hidden items-center gap-8 md:flex">
+        <ul className="hidden items-center gap-8 lg:flex">
           {navLinks.map((link) => (
             <li key={link.href}>
               <Link
                 href={link.href}
-                className="font-body text-sm tracking-wide text-navy-700 transition-colors duration-200 hover:text-navy-900"
+                className="font-body text-base font-medium tracking-[0.06em] text-navy-700 transition-all duration-200 hover:text-gold-600 xl:text-[17px]"
               >
                 {link.label}
               </Link>
@@ -76,8 +99,7 @@ export function Header() {
           ))}
         </ul>
 
-        {/* CTA */}
-        <div className="hidden md:flex">
+        <div className="hidden lg:flex">
           <Link
             href="/diagnostics"
             className="btn-gold"
@@ -86,11 +108,10 @@ export function Header() {
           </Link>
         </div>
 
-        {/* Mobile Menu Button */}
         <button
           type="button"
           onClick={() => setMobileOpen(!mobileOpen)}
-          className="rounded-lg p-2 text-navy-700 md:hidden"
+          className="rounded-lg p-2 text-navy-700 transition-colors hover:bg-navy-50 lg:hidden"
           aria-expanded={mobileOpen}
           aria-label={mobileOpen ? "Close menu" : "Open menu"}
         >
@@ -103,23 +124,22 @@ export function Header() {
 
       </nav>
 
-      {/* Mobile Menu */}
       <div
         className={clsx(
-          "fixed inset-0 top-[80px] z-40 bg-white transition-all duration-300 md:hidden",
+          "absolute left-0 right-0 top-full z-40 border-t border-navy-100 bg-white shadow-md transition-all duration-300 lg:hidden",
           mobileOpen
-            ? "visible opacity-100"
-            : "invisible pointer-events-none opacity-0"
+            ? "visible translate-y-0 opacity-100"
+            : "invisible pointer-events-none -translate-y-2 opacity-0"
         )}
       >
-        <div className="flex flex-col items-center gap-6 px-6 pt-10">
+        <div className="flex flex-col items-center gap-7 px-6 pb-10 pt-8">
 
           {navLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
               onClick={() => setMobileOpen(false)}
-              className="text-lg text-navy-800"
+              className="font-body text-lg tracking-wide text-navy-800 transition-colors hover:text-gold-600"
             >
               {link.label}
             </Link>
@@ -128,7 +148,7 @@ export function Header() {
           <Link
             href="/diagnostics"
             onClick={() => setMobileOpen(false)}
-            className="btn-gold mt-4 w-full max-w-xs text-center"
+            className="btn-gold mt-2 w-full max-w-sm text-center"
           >
             Explore Diagnostics
           </Link>

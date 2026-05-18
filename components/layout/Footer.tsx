@@ -18,16 +18,16 @@ export function Footer() {
 
   return (
     <footer className="bg-navy-900 text-white">
-      <div className="mx-auto max-w-7xl px-6 py-16 lg:px-8">
+      <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-16 lg:px-8">
 
-        <div className="grid items-start gap-12 md:grid-cols-2 lg:grid-cols-4">
+        <div className="grid items-start gap-10 md:grid-cols-2 md:gap-x-12 lg:grid-cols-[1.2fr_0.8fr_0.9fr_1fr] lg:gap-x-16 xl:gap-x-20">
 
           {/* Brand */}
-          <div>
+          <div className="max-w-sm">
             <Link
               href="/"
               aria-label="Pharos English Lab home"
-              className="-mt-9 -ml-3 inline-block"
+              className="-ml-2 inline-block sm:-ml-3 sm:-mt-4"
             >
               <Image
                 src="/pharos-footer-logo.png"
@@ -35,11 +35,11 @@ export function Footer() {
                 width={900}
                 height={220}
                 priority
-                className="w-[320px] h-auto"
+                className="h-auto w-[220px] sm:w-[260px] lg:w-[320px]"
               />
             </Link>
 
-            <p className="mt-4 font-body text-sm leading-relaxed text-navy-300">
+            <p className="mt-4 max-w-sm font-body text-sm leading-relaxed text-navy-300">
               Expert Cambridge diagnostics built on 30+ years of teaching,
               assessment, and exam preparation experience.
             </p>
@@ -91,14 +91,14 @@ export function Footer() {
               Get Started
             </h3>
 
-            <p className="mt-4 font-body text-sm leading-relaxed text-navy-200">
+            <p className="mt-4 max-w-xs font-body text-sm leading-relaxed text-navy-200">
               Ready to understand your current Cambridge level and what to
               improve next?
             </p>
 
             <Link
               href="/diagnostics"
-              className="btn-gold mt-6 inline-flex text-xs"
+              className="btn-gold mt-6 inline-flex w-full max-w-[260px] justify-center"
             >
               Start Your Diagnostic
             </Link>
