@@ -3,10 +3,13 @@
 import { useMemo, useState } from "react";
 import {
   Compass,
+  CheckCircle2,
+  Sparkles,
 } from "lucide-react";
 
 type Question = {
   question: string;
+  prompt?: string;
   scores: number[];
   options: string[];
 };
@@ -33,21 +36,111 @@ const questionsBank: Question[] = [
     ],
   },
   {
+    question: "When facing complex grammar in exams, what feels most familiar?",
+    scores: [3, 1, 2, 0],
+    options: [
+      "I can usually manipulate complex grammar naturally.",
+      "I recognise the structures, but applying them accurately can be difficult.",
+      "I understand them, but pressure affects my choices.",
+      "I usually avoid using structures I’m not fully confident with.",
+    ],
+  },
+  {
     question: "If you notice a mistake during an exam...",
     scores: [3, 2, 1, 0],
     options: [
       "I recover quickly and keep my focus.",
-      "I notice it, but it affects me briefly.",
+      "I notice it, but it affects me for a short time.",
       "I sometimes start doubting later answers.",
       "It often affects my confidence.",
+    ],
+  },
+  {
+    question: "Which sentence sounds most natural?",
+    scores: [1, 3, 0, 0],
+    options: [
+      "Had I known earlier, I would prepare differently.",
+      "Had I known earlier, I would have prepared differently.",
+      "If I had knew earlier, I would prepare differently.",
+      "If I know earlier, I would have prepared differently.",
+    ],
+  },
+  {
+    question: "Choose the best option:",
+    prompt: "She insisted ______ paying for dinner.",
+    scores: [0, 3, 0, 0],
+    options: ["to", "on", "in", "for"],
+  },
+  {
+    question: "Which sentence shows the strongest control?",
+    scores: [1, 0, 3, 2],
+    options: [
+      "The results were surprising enough for everyone.",
+      "The results were enough surprising for everyone.",
+      "The results were sufficiently surprising to everyone.",
+      "The results were so surprising that everyone noticed.",
+    ],
+  },
+  {
+    question: "A writer describes a proposal as:",
+    prompt:
+      "“Ambitious, though perhaps slightly idealistic.” What is the implied attitude?",
+    scores: [1, 3, 0, 0],
+    options: [
+      "Complete approval",
+      "Balanced admiration with some doubt",
+      "Clear rejection",
+      "Confusion",
+    ],
+  },
+  {
+    question: "When a writer avoids stating an opinion directly...",
+    scores: [3, 2, 1, 0],
+    options: [
+      "I usually detect implied meaning easily.",
+      "I sometimes need to reread.",
+      "I often focus more on vocabulary than tone.",
+      "I usually miss the intention.",
+    ],
+  },
+  {
+    question: "Read carefully:",
+    prompt:
+      "Although the candidate appeared confident, her responses often lacked the precision expected at higher levels.",
+    scores: [0, 3, 1, 0],
+    options: [
+      "The candidate was fully prepared.",
+      "The candidate showed confidence but lacked accuracy.",
+      "The candidate had grammar problems only.",
+      "The candidate refused to answer.",
+    ],
+  },
+  {
+    question: "Which opening sounds most appropriate for an academic essay?",
+    scores: [1, 2, 3, 0],
+    options: [
+      "A lot of people think education is changing fast.",
+      "Education has changed a lot recently.",
+      "It is often argued that education is undergoing significant transformation.",
+      "Nowadays education changes very quickly.",
+    ],
+  },
+  {
+    question: "Which phrase sounds least natural in formal writing?",
+    scores: [1, 1, 3, 1],
+    options: [
+      "From my perspective",
+      "To a considerable extent",
+      "Kids these days",
+      "It could be argued that",
     ],
   },
 ];
 
 function getProfile(score: number) {
-  if (score <= 2) return "Still Building Toward B2";
-  if (score <= 5) return "B2 Ready — Ready for Diagnostic Confirmation";
-  if (score <= 7) return "Strong B2 / Emerging C1";
+  if (score <= 12) return "Still Building Toward B2";
+  if (score <= 22) return "B2 Ready — Ready for Diagnostic Confirmation";
+  if (score <= 30) return "Strong B2 / Emerging C1";
 
   return "Likely C1 Advanced Candidate";
 }
@@ -116,18 +209,35 @@ export default function ReadinessPage() {
   if (!started) {
     return (
       <main className="section-light section-padding min-h-screen">
-
         <div className="mx-auto max-w-4xl text-center">
 
           <Compass className="mx-auto mb-6 h-16 w-16 text-gold-500" />
 
-          <h1 className="font-body text-4xl font-light text-navy-900">
-            Are You Truly Ready for Cambridge?
+          <h1 className="font-body text-4xl font-light text-navy-900 sm:text-5xl">
+            Pharos Cambridge Placement & Readiness Assessment
           </h1>
 
-          <p className="mx-auto mt-6 max-w-2xl font-body text-lg leading-relaxed text-navy-600">
-            Discover whether you are truly ready for B2 First or C1 Advanced before investing months of preparation.
+          <p className="mx-auto mt-6 max-w-2xl font-body text-lg text-navy-600">
+            Discover which Cambridge pathway may best match your current level.
           </p>
+
+          <div className="mt-12 grid gap-6 md:grid-cols-2">
+
+            <div className="card p-8 text-center">
+              <CheckCircle2 className="mx-auto mb-4 h-8 w-8 text-gold-500" />
+              <h3 className="font-body text-xl text-navy-900">
+                B2 First
+              </h3>
+            </div>
+
+            <div className="card p-8 text-center">
+              <Sparkles className="mx-auto mb-4 h-8 w-8 text-gold-500" />
+              <h3 className="font-body text-xl text-navy-900">
+                C1 Advanced
+              </h3>
+            </div>
+
+          </div>
 
           <button
             onClick={() => setStarted(true)}
@@ -137,7 +247,6 @@ export default function ReadinessPage() {
           </button>
 
         </div>
-
       </main>
     );
   }
@@ -145,7 +254,6 @@ export default function ReadinessPage() {
   if (showForm && !submitted) {
     return (
       <main className="section-light section-padding min-h-screen">
-
         <div className="mx-auto max-w-xl">
 
           <h1 className="mb-8 text-center font-body text-3xl text-navy-900">
@@ -179,16 +287,15 @@ export default function ReadinessPage() {
           </div>
 
         </div>
-
       </main>
     );
   }
 
   if (submitted) {
     return (
-      <main className="section-light min-h-screen relative">
+      <main className="section-light section-padding min-h-screen">
 
-        <div className="mx-auto max-w-2xl text-center pt-20">
+        <div className="mx-auto max-w-2xl text-center">
 
           <Compass className="mx-auto mb-6 h-12 w-12 text-gold-500" />
 
@@ -207,21 +314,39 @@ export default function ReadinessPage() {
   }
 
   const question = questions[current];
+  const progress = ((current + 1) / questions.length) * 100;
 
   return (
     <main className="section-light section-padding min-h-screen">
 
       <div className="mx-auto max-w-3xl">
 
-        <div className="card p-8">
+        <div className="mb-10 text-center">
 
-          <p className="mb-4 text-sm tracking-[0.12em] uppercase text-gold-600">
+          <p className="font-body text-sm text-navy-500">
             Question {current + 1} of {questions.length}
           </p>
+
+          <div className="mt-4 overflow-hidden rounded-full bg-navy-100">
+            <div
+              className="h-2 bg-gold-500 transition-all duration-500"
+              style={{ width: `${progress}%` }}
+            />
+          </div>
+
+        </div>
+
+        <div className="card p-6 sm:p-8 md:p-10">
 
           <h2 className="mb-8 font-body text-2xl text-navy-900">
             {question.question}
           </h2>
+
+          {question.prompt && (
+            <div className="mb-8 whitespace-pre-line font-body text-base text-navy-700">
+              {question.prompt}
+            </div>
+          )}
 
           <div className="grid gap-4">
 
@@ -229,7 +354,7 @@ export default function ReadinessPage() {
               <button
                 key={option}
                 onClick={() => handleAnswer(index)}
-                className="rounded-2xl border border-navy-200 bg-white p-5 text-left font-body text-base text-navy-700 transition-all duration-200 hover:border-gold-400 hover:shadow-sm"
+                className="rounded-2xl border border-navy-200 bg-white p-5 text-left font-body text-base text-navy-700 transition-all duration-300 hover:border-gold-500 hover:bg-gold-50"
               >
 
                 <span className="flex gap-3">
