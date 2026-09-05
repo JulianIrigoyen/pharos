@@ -4,6 +4,7 @@ import { useState } from "react";
 import clsx from "clsx";
 import { UseOfEnglishForm } from "@/components/exam/UseOfEnglishForm";
 import type { ExamLevel } from "@/types/diagnostic";
+import { USE_OF_ENGLISH_DURATION_MINUTES } from "@/types/exam-parts";
 
 /**
  * Preview-only page: renders the Use of English exam form directly, with
@@ -59,7 +60,13 @@ export default function ExamPreviewPage() {
 
       <section className="section-padding">
         <div className="mx-auto max-w-4xl">
-          <UseOfEnglishForm orderId="preview-only" examLevel={level} />
+          <UseOfEnglishForm
+            orderId="preview-only"
+            examLevel={level}
+            timedMode={false}
+            examStartedAt={new Date().toISOString()}
+            durationMinutes={USE_OF_ENGLISH_DURATION_MINUTES[level]}
+          />
         </div>
       </section>
     </main>
