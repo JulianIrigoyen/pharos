@@ -24,7 +24,7 @@ export async function GET(
     const { data: order, error } = await supabase
       .from("orders")
       .select(
-        "id, status, diagnostic_type, exam_level, pdf_url, exam_started_at, exam_timed_mode, assigned_test_code"
+        "id, status, diagnostic_type, exam_level, pdf_url, exam_started_at, exam_timed_mode, assigned_test_code, writing_prompt_id, writing_prompt:writing_prompts(id, code, exam_level, part, task_type, word_count, prompt_text, topic_tag)"
       )
       .eq(column, orderId)
       .single();

@@ -12,6 +12,7 @@ import { UserMenu } from "@/components/auth/UserMenu";
 const navLinks = [
   { href: "/", label: "Home" },
   { href: "/about", label: "About" },
+  { href: "/which-exam", label: "Which Exam?" },
   { href: "/readiness", label: "Readiness" },
   { href: "/diagnostics", label: "Diagnostics" },
   { href: "/contact", label: "Contact" },

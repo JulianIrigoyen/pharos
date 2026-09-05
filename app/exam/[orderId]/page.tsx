@@ -21,6 +21,8 @@ type ExamOrder = Pick<
   | "exam_started_at"
   | "exam_timed_mode"
   | "assigned_test_code"
+  | "writing_prompt_id"
+  | "writing_prompt"
 >;
 
 export default function ExamPage() {
@@ -247,7 +249,11 @@ export default function ExamPage() {
       <section className="section-padding">
         <div className={clsx("mx-auto", showsSplitView ? "max-w-7xl" : "max-w-4xl")}>
           {order.diagnostic_type === "writing" && (
-            <WritingForm orderId={order.id} examLevel={order.exam_level} />
+            <WritingForm
+              orderId={order.id}
+              examLevel={order.exam_level}
+              prompt={order.writing_prompt ?? null}
+            />
           )}
 
           {order.diagnostic_type === "use-of-english" &&

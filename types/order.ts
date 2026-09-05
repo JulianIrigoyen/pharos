@@ -4,6 +4,19 @@ export type OrderStatus = "paid" | "submitted" | "processing" | "completed" | "f
 
 export type PaymentProvider = "stripe" | "paypal" | "mercadopago" | "manual";
 
+// Original Pharos writing prompt, assigned automatically to "writing" orders.
+// See supabase/migrations/003_writing_prompts.sql.
+export interface WritingPrompt {
+  id: string;
+  code: string;
+  exam_level: ExamLevel;
+  part: "Part 1" | "Part 2";
+  task_type: string;
+  word_count: string;
+  prompt_text: string;
+  topic_tag: string | null;
+}
+
 export interface Order {
   id: string;
   created_at: string;
@@ -33,6 +46,9 @@ export interface Order {
   exam_timed_mode: boolean | null;
   /** Set once, alongside exam_started_at, from the bank of tests for this level (e.g. "B2-CAMBRIDGE-SAMPLE-1"). References exam_tests.test_code. */
   assigned_test_code: string | null;
+  writing_prompt_id: string | null;
+  // Present only when the API embeds the joined prompt (see /api/status/[orderId]).
+  writing_prompt?: WritingPrompt | null;
 }
 
 export interface Submission {

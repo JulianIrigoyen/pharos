@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export function Hero() {
   return (
-    <section className="relative overflow-hidden bg-[#f6f3ef] pb-24 pt-32 text-navy-900 sm:pb-28 sm:pt-36 md:pb-36 md:pt-40">
+    <section className="relative overflow-hidden bg-[#f6f3ef] pb-16 pt-20 text-navy-900 sm:pb-20 sm:pt-24 md:pb-24 md:pt-28">
       
       {/* Atmospheric lighthouse image */}
       <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-[42%] md:block">
@@ -32,59 +32,60 @@ export function Hero() {
       <div className="relative mx-auto max-w-6xl px-6 text-center">
 
         {/* Lighthouse */}
-        <div className="mb-8 flex justify-center">
+        <div className="mb-6 flex justify-center">
           <Image
             src="/favicon.png"
             alt="Pharos Lighthouse"
-            width={58}
-            height={58}
+            width={48}
+            height={48}
             className="object-contain opacity-95"
             priority
           />
         </div>
 
         {/* Headline */}
-        <div className="space-y-2">
+        <div className="space-y-1">
 
-          <h1 className="font-body text-4xl font-light leading-[0.95] tracking-[-0.03em] text-navy-900 sm:text-5xl md:text-6xl">
+          <h1 className="font-body text-3xl font-light leading-[0.98] tracking-[-0.02em] text-navy-900 sm:text-4xl md:text-5xl">
             Navigate Your
           </h1>
 
-          <h2 className="font-body text-[2.1rem] font-light leading-[1.02] tracking-[-0.03em] text-gold-600 sm:text-4xl md:text-5xl">
+          <h2 className="font-body text-[1.7rem] font-light leading-[1.05] tracking-[-0.02em] text-gold-600 sm:text-[2rem] md:text-4xl">
             Cambridge Exam Journey
           </h2>
 
         </div>
 
         {/* Subheadline */}
-        <p className="mx-auto mt-10 max-w-3xl font-body text-lg font-light leading-relaxed text-navy-600 sm:text-xl">
+        <p className="mx-auto mt-6 max-w-2xl font-body text-base leading-relaxed text-navy-600 sm:text-lg">
           Expert Cambridge diagnostics built on 30+ years of experience.
           Gain clarity, direction, and the confidence to improve.
         </p>
 
+        {/* Supporting copy */}
+        <p className="mx-auto mt-6 max-w-2xl font-body text-sm leading-relaxed text-navy-500 md:text-base">
+          Not sure where you stand? Start with a personalised readiness
+          check — then explore the full diagnostics to go deeper.
+        </p>
+
         {/* CTAs */}
-        <div className="mt-14 flex flex-col items-center justify-center gap-4 sm:flex-row">
+        <div className="mt-6 flex flex-col items-center justify-center gap-4 sm:flex-row">
 
           <a
             href="/readiness"
-            className="inline-flex h-[82px] w-full max-w-[340px] items-center justify-center rounded-xl border border-navy-300 bg-white/30 px-8 text-center text-sm uppercase tracking-[0.16em] text-navy-900 backdrop-blur-sm transition-all duration-300 hover:border-navy-900 hover:bg-white/55 sm:w-auto sm:min-w-[300px]"
+            className="inline-flex h-[58px] w-full max-w-[300px] items-center justify-center rounded-xl border border-navy-300 bg-white/30 px-8 text-center text-sm uppercase tracking-[0.16em] text-navy-900 backdrop-blur-sm transition-all duration-300 hover:border-navy-900 hover:bg-white/55 sm:w-auto sm:min-w-[260px]"
           >
             Check Your Exam Readiness
           </a>
 
           <a
             href="/diagnostics"
-            className="inline-flex h-[82px] w-full max-w-[340px] items-center justify-center rounded-xl border border-navy-300 bg-white/30 px-8 text-center text-sm uppercase tracking-[0.16em] text-navy-900 backdrop-blur-sm transition-all duration-300 hover:border-navy-900 hover:bg-white/55 sm:w-auto sm:min-w-[300px]"
+            className="inline-flex h-[58px] w-full max-w-[300px] items-center justify-center rounded-xl border border-navy-300 bg-white/30 px-8 text-center text-sm uppercase tracking-[0.16em] text-navy-900 backdrop-blur-sm transition-all duration-300 hover:border-navy-900 hover:bg-white/55 sm:w-auto sm:min-w-[260px]"
           >
             Explore Diagnostics
           </a>
 
         </div>
-
-        {/* Supporting copy */}
-        <p className="mx-auto mt-10 max-w-2xl font-body text-sm leading-relaxed text-navy-500 md:text-base">
-          Not sure where you stand? Start with a personalised readiness check.
-        </p>
 
       </div>
     </section>
