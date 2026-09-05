@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
+import { PHAROS_OFFICIAL_LOCKUP_CROPPED_BASE64 } from "@/lib/emailLogo";
+import { SITE_URL } from "@/lib/siteUrl";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -72,6 +74,10 @@ export async function POST(request: Request) {
     const result =
       getPersonalMessage(profile);
 
+    // Logo/lighthouse are sent as CID-embedded attachments rather than base64
+    // data URIs in the HTML: Gmail (and several other clients) strip base64
+    // image sources for security reasons, so a data: URI silently fails to
+    // render even though the rest of the email displays fine.
     await resend.emails.send({
       from:
         "Pharos English Lab <contact@pharosenglishlab.com>",
@@ -81,14 +87,47 @@ export async function POST(request: Request) {
       subject:
         "Your Cambridge Placement Profile – Pharos English Lab",
 
+      attachments: [
+        {
+          content: PHAROS_OFFICIAL_LOCKUP_CROPPED_BASE64,
+          filename: "pharos-logo.png",
+          contentId: "pharos-logo",
+        },
+      ],
+
       html: `
+        <style>
+          /* Raleway is one of the two Pharos brand fonts (Tan Pearl is used
+             only for the logo, baked into the image above). Clients that
+             support @import (Apple Mail, iOS Mail, Outlook for Mac) will
+             load it; Gmail/Outlook/Yahoo don't support web fonts in email
+             at all and will use the Arial/sans-serif fallback instead —
+             that's expected, not a bug. */
+          @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700&display=swap');
+        </style>
         <div style="
-          font-family: Arial, sans-serif;
+          font-family: 'Raleway', Arial, sans-serif;
           line-height: 1.7;
           color: #1f2a44;
           max-width: 600px;
           margin: 0 auto;
         ">
+
+          <div style="
+            background: #ffffff;
+            padding: 24px 0 16px;
+            text-align: center;
+            border-bottom: 1px solid #eee7d8;
+            border-radius: 10px 10px 0 0;
+          ">
+            <img
+              src="cid:pharos-logo"
+              alt="Pharos English Lab — Shine your way to English"
+              style="height: 76px; width: auto;"
+            />
+          </div>
+
+          <div style="padding: 8px 4px;">
 
           <h2>
             Your Cambridge Placement Profile
@@ -133,7 +172,7 @@ export async function POST(request: Request) {
           ">
 
             <a
-              href="http://localhost:3000/diagnostics"
+              href="${SITE_URL}/diagnostics"
               style="
                 display: inline-block;
                 padding: 14px 24px;
@@ -154,6 +193,8 @@ export async function POST(request: Request) {
             Founder & Academic Director<br/>
             Pharos English Lab
           </p>
+
+          </div>
 
         </div>
       `,

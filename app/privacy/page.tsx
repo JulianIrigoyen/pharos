@@ -11,16 +11,16 @@ export default function PrivacyPolicyPage() {
   return (
     <main>
       {/* Hero */}
-      <section className="section-padding section-alt">
-        <div className="mx-auto max-w-4xl px-6 text-center">
+      <section className="section-alt px-6 py-8 sm:py-10">
+        <div className="mx-auto max-w-4xl text-center">
           <ShieldCheck
-            className="mx-auto mb-6 h-14 w-14 text-gold-500 sm:h-16 sm:w-16"
+            className="mx-auto mb-2 h-8 w-8 text-gold-500 sm:h-9 sm:w-9"
             strokeWidth={1.2}
           />
 
-          <h1 className="heading-xl">Privacy Policy</h1>
+          <h1 className="heading-lg">Privacy Policy</h1>
 
-          <p className="mx-auto mt-6 max-w-2xl font-body text-base leading-relaxed text-navy-600 sm:text-lg">
+          <p className="mx-auto mt-2 max-w-2xl font-body text-sm leading-relaxed text-navy-600">
             Last updated: 12 July 2026
           </p>
         </div>

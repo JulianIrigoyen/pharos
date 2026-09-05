@@ -3,12 +3,18 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
-import { Loader2, AlertCircle } from "lucide-react";
+import { Loader2, AlertCircle, ClipboardList } from "lucide-react";
 import clsx from "clsx";
+import type { WritingPrompt } from "@/types/order";
 
 interface WritingFormProps {
   orderId: string;
   examLevel: string;
+  // Assigned automatically from the Pharos writing_prompts bank when the
+  // order is created (see /api/stripe/webhook). Null only for legacy orders
+  // created before this existed, or if assignment failed — in that case we
+  // fall back to the old "paste your own task" behaviour below.
+  prompt?: WritingPrompt | null;
 }
 
 interface WritingFormData {
@@ -26,9 +32,10 @@ const taskTypes = [
   { value: "article", label: "Article" },
 ];
 
-export function WritingForm({ orderId, examLevel }: WritingFormProps) {
+export function WritingForm({ orderId, examLevel, prompt }: WritingFormProps) {
   const router = useRouter();
   const [submitError, setSubmitError] = useState<string | null>(null);
+  const hasAssignedPrompt = Boolean(prompt);
 
   const {
     register,
@@ -55,8 +62,9 @@ export function WritingForm({ orderId, examLevel }: WritingFormProps) {
         body: JSON.stringify({
           orderId,
           answers: {
-            task_type: data.task_type,
-            prompt: data.prompt,
+            task_type: hasAssignedPrompt ? prompt!.task_type : data.task_type,
+            prompt: hasAssignedPrompt ? prompt!.prompt_text : data.prompt,
+            prompt_code: hasAssignedPrompt ? prompt!.code : null,
             response_text: data.response_text,
             word_count: wordCount,
             exam_level: examLevel,
@@ -85,71 +93,97 @@ export function WritingForm({ orderId, examLevel }: WritingFormProps) {
       <div>
         <h2 className="heading-sm">Your Writing Submission</h2>
         <p className="mt-2 font-body text-sm text-navy-500">
-          Paste or type your Cambridge writing task below. Make sure to include
-          the original exam question so we can evaluate your response
-          accurately.
+          {hasAssignedPrompt
+            ? "Read your assigned task below and write your response directly on this page."
+            : "Paste or type your Cambridge writing task below. Make sure to include the original exam question so we can evaluate your response accurately."}
         </p>
       </div>
 
-      {/* Task Type */}
-      <div>
-        <label
-          htmlFor="task_type"
-          className="mb-1.5 block font-body text-sm font-medium text-navy-700"
-        >
-          Task Type
-        </label>
-        <select
-          id="task_type"
-          className={clsx(
-            "input-field",
-            errors.task_type && "!border-red-400 !ring-red-400/20"
-          )}
-          {...register("task_type", { required: "Please select a task type" })}
-        >
-          {taskTypes.map((opt) => (
-            <option key={opt.value} value={opt.value}>
-              {opt.label}
-            </option>
-          ))}
-        </select>
-        {errors.task_type && (
-          <p className="mt-1 font-body text-xs text-red-500">
-            {errors.task_type.message}
+      {hasAssignedPrompt ? (
+        /* Assigned prompt from the Pharos writing_prompts bank — read only. */
+        <div className="rounded-xl border border-gold-200 bg-gold-50 p-5">
+          <div className="mb-3 flex flex-wrap items-center gap-2">
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-white px-3 py-1 font-body text-xs font-semibold text-navy-700">
+              <ClipboardList size={13} className="text-gold-500" />
+              {prompt!.task_type}
+            </span>
+            <span className="rounded-full bg-white px-3 py-1 font-body text-xs font-medium text-navy-500">
+              {prompt!.exam_level} · {prompt!.part}
+            </span>
+            <span className="rounded-full bg-white px-3 py-1 font-body text-xs font-medium text-navy-500">
+              {prompt!.word_count} words
+            </span>
+            <span className="rounded-full bg-white px-3 py-1 font-body text-xs font-medium text-navy-400">
+              {prompt!.code}
+            </span>
+          </div>
+          <p className="whitespace-pre-wrap font-body text-sm leading-relaxed text-navy-800">
+            {prompt!.prompt_text}
           </p>
-        )}
-      </div>
+        </div>
+      ) : (
+        <>
+          {/* Task Type — legacy fallback, only shown if no prompt was assigned */}
+          <div>
+            <label
+              htmlFor="task_type"
+              className="mb-1.5 block font-body text-sm font-medium text-navy-700"
+            >
+              Task Type
+            </label>
+            <select
+              id="task_type"
+              className={clsx(
+                "input-field",
+                errors.task_type && "!border-red-400 !ring-red-400/20"
+              )}
+              {...register("task_type", { required: "Please select a task type" })}
+            >
+              {taskTypes.map((opt) => (
+                <option key={opt.value} value={opt.value}>
+                  {opt.label}
+                </option>
+              ))}
+            </select>
+            {errors.task_type && (
+              <p className="mt-1 font-body text-xs text-red-500">
+                {errors.task_type.message}
+              </p>
+            )}
+          </div>
 
-      {/* Task Prompt */}
-      <div>
-        <label
-          htmlFor="prompt"
-          className="mb-1.5 block font-body text-sm font-medium text-navy-700"
-        >
-          Task Prompt / Question
-        </label>
-        <textarea
-          id="prompt"
-          rows={4}
-          className={clsx(
-            "input-field resize-y",
-            errors.prompt && "!border-red-400 !ring-red-400/20"
-          )}
-          placeholder="Paste the exam question or task instructions here..."
-          {...register("prompt", {
-            required: "Please provide the task question",
-            minLength: {
-              value: 10,
-              message: "The task question seems too short",
-            },
-          })}
-        />
-        {errors.prompt && (
-          <p className="mt-1 font-body text-xs text-red-500">
-            {errors.prompt.message}
-          </p>
-        )}
-      </div>
+          {/* Task Prompt — legacy fallback, only shown if no prompt was assigned */}
+          <div>
+            <label
+              htmlFor="prompt"
+              className="mb-1.5 block font-body text-sm font-medium text-navy-700"
+            >
+              Task Prompt / Question
+            </label>
+            <textarea
+              id="prompt"
+              rows={4}
+              className={clsx(
+                "input-field resize-y",
+                errors.prompt && "!border-red-400 !ring-red-400/20"
+              )}
+              placeholder="Paste the exam question or task instructions here..."
+              {...register("prompt", {
+                required: "Please provide the task question",
+                minLength: {
+                  value: 10,
+                  message: "The task question seems too short",
+                },
+              })}
+            />
+            {errors.prompt && (
+              <p className="mt-1 font-body text-xs text-red-500">
+                {errors.prompt.message}
+              </p>
+            )}
+          </div>
+        </>
+      )}
 
       {/* Response Text */}
       <div>
@@ -176,7 +210,7 @@ export function WritingForm({ orderId, examLevel }: WritingFormProps) {
             "input-field resize-y",
             errors.response_text && "!border-red-400 !ring-red-400/20"
           )}
-          placeholder="Paste or type your writing response here..."
+          placeholder="Write your response here..."
           {...register("response_text", {
             required: "Please provide your writing response",
             minLength: {

@@ -46,10 +46,10 @@ export default function AboutPage() {
 
       {/* Hero */}
       <section className="section-padding section-alt">
-        <div className="mx-auto max-w-4xl text-center">
+        <div className="mx-auto max-w-4xl px-6 text-center">
 
           <Compass
-            className="mx-auto mb-6 h-16 w-16 text-gold-500"
+            className="mx-auto mb-6 h-14 w-14 text-gold-500 sm:h-16 sm:w-16"
             strokeWidth={1.2}
           />
 
@@ -57,7 +57,7 @@ export default function AboutPage() {
             About Pharos English Lab
           </h1>
 
-          <p className="mx-auto mt-6 max-w-2xl font-body text-lg leading-relaxed text-navy-600">
+          <p className="mx-auto mt-6 max-w-2xl font-body text-base leading-relaxed text-navy-600 sm:text-lg">
             Cambridge exam diagnostics built on decades of experience,
             personal guidance, and honest feedback.
           </p>
@@ -70,10 +70,10 @@ export default function AboutPage() {
       <section className="relative overflow-hidden section-padding">
 
         {/* Background image */}
-        <div className="absolute inset-0 pointer-events-none">
+        <div className="pointer-events-none absolute inset-0">
 
           <div
-            className="absolute right-0 top-0 h-full w-[58%] bg-right bg-contain bg-no-repeat opacity-[0.34]"
+            className="absolute right-[-10%] top-0 h-full w-[92%] bg-right bg-contain bg-no-repeat opacity-[0.10] sm:opacity-[0.14] md:right-0 md:w-[58%] md:opacity-[0.34]"
             style={{
               backgroundImage:
                 "url('/marcela-lighthouse-pharos.jpg')",
@@ -90,10 +90,10 @@ export default function AboutPage() {
                 linear-gradient(
                   to right,
                   rgba(248,249,251,1) 0%,
-                  rgba(248,249,251,0.97) 45%,
-                  rgba(228,236,247,0.62) 65%,
-                  rgba(214,226,241,0.18) 82%,
-                  rgba(214,226,241,0) 100%
+                  rgba(248,249,251,0.985) 42%,
+                  rgba(228,236,247,0.72) 62%,
+                  rgba(214,226,241,0.28) 82%,
+                  rgba(214,226,241,0.06) 100%
                 )
               `,
             }}
@@ -103,15 +103,15 @@ export default function AboutPage() {
 
 
         {/* Content */}
-        <div className="relative z-10 mx-auto max-w-6xl">
+        <div className="relative z-10 mx-auto max-w-6xl px-6">
 
           <div className="max-w-3xl">
 
-            <h2 className="heading-lg mb-10">
+            <h2 className="heading-lg mb-8 sm:mb-10">
               The Story Behind Pharos
             </h2>
 
-            <div className="space-y-8 font-body text-base leading-relaxed text-navy-700">
+            <div className="space-y-7 font-body text-[15px] leading-relaxed text-navy-700 sm:space-y-8 sm:text-base">
 
               <p>
                 Hi, I’m Marcela Liporace Murga — English teacher and founder of Pharos English Lab.
@@ -144,12 +144,12 @@ export default function AboutPage() {
 
       {/* Why Pharos */}
       <section className="section-padding section-dark">
-        <div className="mx-auto max-w-3xl">
+        <div className="mx-auto max-w-3xl px-6">
 
           <div className="flex items-center gap-4">
 
             <Compass
-              className="h-10 w-10 shrink-0 text-gold-500"
+              className="h-9 w-9 shrink-0 text-gold-500 sm:h-10 sm:w-10"
               strokeWidth={1.5}
             />
 
@@ -159,7 +159,7 @@ export default function AboutPage() {
 
           </div>
 
-          <div className="mt-6 space-y-4 font-body text-base leading-relaxed text-navy-200">
+          <div className="mt-6 space-y-4 font-body text-[15px] leading-relaxed text-navy-200 sm:text-base">
 
             <p>
               A lighthouse exists to guide, illuminate, and offer direction when the path ahead feels uncertain.
@@ -177,7 +177,7 @@ export default function AboutPage() {
 
       {/* Methodology */}
       <section className="section-padding">
-        <div className="mx-auto max-w-5xl">
+        <div className="mx-auto max-w-5xl px-6">
 
           <div className="text-center">
 
@@ -191,7 +191,7 @@ export default function AboutPage() {
 
           </div>
 
-          <div className="mt-14 grid gap-10 sm:grid-cols-2">
+          <div className="mt-12 grid gap-10 sm:grid-cols-2">
 
             {values.map((value) => (
               <div key={value.title} className="flex gap-5">
@@ -226,17 +226,17 @@ export default function AboutPage() {
 
       {/* Cambridge Focus */}
       <section className="section-padding section-alt">
-        <div className="mx-auto max-w-3xl text-center">
+        <div className="mx-auto max-w-3xl px-6 text-center">
 
           <h2 className="heading-lg">
             Cambridge Exam Specialist
           </h2>
 
-          <p className="mt-6 font-body text-base leading-relaxed text-navy-700">
+          <p className="mt-6 font-body text-[15px] leading-relaxed text-navy-700 sm:text-base">
             My current focus is helping B2 First and C1 Advanced candidates prepare with clarity, strategy, and honest performance feedback.
           </p>
 
-          <div className="mt-8 flex justify-center gap-6">
+          <div className="mt-8 flex flex-col justify-center gap-4 sm:flex-row sm:gap-6">
 
             <div className="card px-8 py-5 text-center">
               <span className="font-body text-2xl font-semibold text-navy-900">

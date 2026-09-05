@@ -1,5 +1,4 @@
-import { ClipboardList, CreditCard, Mail, FileText } from "lucide-react";
-import clsx from "clsx";
+import { ClipboardList, CreditCard, PenLine, Mail } from "lucide-react";
 
 const STEPS = [
   {
@@ -18,17 +17,17 @@ const STEPS = [
   },
   {
     number: 3,
-    title: "Receive & Submit",
+    title: "Complete Your Diagnostic",
     description:
-      "Your exam arrives by email. Complete it and submit your answers.",
-    icon: Mail,
+      "Right after payment, take the assessment directly on our site.",
+    icon: PenLine,
   },
   {
     number: 4,
     title: "Get Your Report",
     description:
-      "Receive clear Cambridge-focused feedback and next steps.",
-    icon: FileText,
+      "Receive your personalised Cambridge report by email within 24-48 hours.",
+    icon: Mail,
   },
 ] as const;
 
@@ -36,7 +35,7 @@ export function HowItWorks() {
   return (
     <section
       id="how-it-works"
-      className="section-alt px-5 py-16 sm:px-6 sm:py-20 md:py-24"
+      className="section-alt px-5 py-10 sm:px-6 sm:py-14 md:py-16"
     >
       <div className="mx-auto max-w-6xl">
 
@@ -44,12 +43,12 @@ export function HowItWorks() {
           How It Works
         </h2>
 
-        <div className="relative mt-10 sm:mt-14">
+        <div className="relative mt-8 sm:mt-10">
 
           {/* Desktop line */}
           <div
             aria-hidden="true"
-            className="absolute left-0 right-0 top-10 hidden h-0.5 bg-navy-200 md:block"
+            className="absolute left-0 right-0 top-9 hidden h-0.5 bg-navy-200 md:block"
           />
 
           <div className="grid gap-8 sm:gap-10 md:grid-cols-4 md:gap-6">
@@ -64,19 +63,15 @@ export function HowItWorks() {
                 >
 
                   {/* Icon */}
-                  <div
-                    className={clsx(
-                      "relative z-10 flex h-14 w-14 items-center justify-center rounded-full border-2 border-navy-200 bg-white shadow-sm sm:h-20 sm:w-20"
-                    )}
-                  >
+                  <div className="relative z-10 flex h-14 w-14 items-center justify-center rounded-full border-2 border-navy-200 bg-white shadow-sm sm:h-[70px] sm:w-[70px]">
                     <Icon
-                      className="h-6 w-6 text-gold-500 sm:h-8 sm:w-8"
+                      className="h-6 w-6 text-gold-500 sm:h-7 sm:w-7"
                       strokeWidth={1.5}
                     />
                   </div>
 
                   {/* Number */}
-                  <span className="mt-3 inline-flex h-6 w-6 items-center justify-center rounded-full bg-navy-900 font-body text-[11px] font-semibold text-white sm:h-7 sm:w-7 sm:text-xs">
+                  <span className="mt-2.5 inline-flex h-6 w-6 items-center justify-center rounded-full bg-navy-900 font-body text-[11px] font-semibold text-white">
                     {step.number}
                   </span>
 
