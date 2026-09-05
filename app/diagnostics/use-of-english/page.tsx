@@ -1,37 +1,41 @@
-import Link from "next/link";
 import {
   Check,
-  ClipboardList,
   CreditCard,
-  Mail,
-  FileText,
+  MonitorCheck,
+  MailCheck,
+  SearchCheck,
   Award,
 } from "lucide-react";
+import { PayPalCheckoutButton } from "@/components/diagnostics/PayPalCheckoutButton";
+import { DIAGNOSTICS } from "@/types/diagnostic";
+
+const PRICE =
+  DIAGNOSTICS.find((d) => d.slug === "use-of-english")?.price ?? 8;
 
 const STEPS = [
   {
     title: "Pay",
-    description: "Complete payment.",
+    description: "Choose your level and pay securely with PayPal.",
     icon: CreditCard,
   },
   {
-    title: "Email",
-    description: "Send receipt.",
-    icon: Mail,
+    title: "Take It Online",
+    description: "Your test opens right here — timed or practice mode.",
+    icon: MonitorCheck,
   },
   {
-    title: "Paper",
-    description: "Receive exam.",
-    icon: ClipboardList,
+    title: "Instant Receipt",
+    description: "Your answer sheet is emailed to you automatically.",
+    icon: MailCheck,
   },
   {
-    title: "Submit",
-    description: "Upload answers.",
-    icon: FileText,
+    title: "Expert Review",
+    description: "Your answers are corrected and analysed in detail.",
+    icon: SearchCheck,
   },
   {
-    title: "Feedback",
-    description: "Receive report.",
+    title: "Report",
+    description: "Receive your full performance report.",
     icon: Award,
   },
 ];
@@ -100,7 +104,7 @@ export default function UseOfEnglishPage() {
               <div className="flex h-24 w-24 flex-col items-center justify-center rounded-2xl border border-gold-200 bg-gold-50">
 
                 <span className="text-2xl font-semibold text-gold-500">
-                  $8
+                  ${PRICE}
                 </span>
 
                 <span className="text-xs tracking-wide text-gold-500">
@@ -170,55 +174,33 @@ export default function UseOfEnglishPage() {
       </section>
 
 
-      {/* ACTIONS */}
-      <section className="mx-auto max-w-xl px-4 pb-16 text-center sm:px-6">
+      {/* CHECKOUT */}
+      <section className="mx-auto max-w-xl px-4 pb-16 sm:px-6">
 
-        <a
-          href="YOUR_PAYPAL_LINK_HERE"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex h-11 w-full items-center justify-center rounded-xl bg-gold-500 px-6 text-sm font-medium text-white transition-colors hover:bg-gold-600 sm:w-56"
-        >
-          Pay with PayPal
-        </a>
+        <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
 
-        <div className="mt-8 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+          <h3 className="font-body text-xl font-semibold text-navy-900">
+            Start Your Diagnostic
+          </h3>
 
-          <p className="text-sm leading-relaxed text-navy-700">
-            After payment, email your receipt, full name, and exam level to:
+          <p className="mt-2 mb-6 text-sm text-navy-600">
+            Pay securely with PayPal — no PayPal account needed, cards work
+            too. Right after payment, your exam opens automatically.
           </p>
 
-          <p className="mt-3 text-base font-medium text-navy-900 sm:text-lg">
-            pharosenglishlab@gmail.com
+          <PayPalCheckoutButton
+            diagnosticType="use-of-english"
+            price={PRICE}
+          />
+
+          <p className="mt-5 text-xs leading-relaxed text-navy-500">
+            Tip: log in first (or create a free account) so your diagnostic
+            and report appear in your dashboard. Questions? Write to{" "}
+            <span className="font-medium text-navy-700">
+              pharosenglishlab@gmail.com
+            </span>
+            .
           </p>
-
-        </div>
-
-        <h3 className="mt-10 font-body text-2xl font-semibold text-navy-900">
-          Submit Answers
-        </h3>
-
-        <p className="mt-2 text-sm text-navy-600">
-          Choose your exam level and upload your answers.
-        </p>
-
-        <div className="mt-5 flex flex-col items-center gap-3">
-
-          <Link
-            href="https://docs.google.com/forms/d/e/1FAIpQLSeFIiWLRWTaqgg1GwnUYevOHAl1WE7EM1pXnfH8tNq8RiOtfg/viewform?usp=header"
-            target="_blank"
-            className="inline-flex h-11 w-full items-center justify-center rounded-xl bg-navy-900 px-6 text-sm text-white transition-colors hover:bg-navy-800 sm:w-56"
-          >
-            B2 First
-          </Link>
-
-          <Link
-            href="https://docs.google.com/forms/d/e/1FAIpQLSfQD54FjKso0BVPmQGjuBrEbGP7R9tc9JzBQe8uLhCrYU-MPA/viewform?usp=header"
-            target="_blank"
-            className="inline-flex h-11 w-full items-center justify-center rounded-xl bg-navy-900 px-6 text-sm text-white transition-colors hover:bg-navy-800 sm:w-56"
-          >
-            C1 Advanced
-          </Link>
 
         </div>
 

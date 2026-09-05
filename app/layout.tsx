@@ -31,7 +31,22 @@ const raleway = Raleway({
 export const metadata: Metadata = {
   title: "Pharos English Lab | Cambridge Exam Diagnostics",
   description:
-    "Professional diagnostic reports for Cambridge B2 First and C1 Advanced exam preparation.",
+    "Professional Cambridge diagnostics and expert readiness guidance for B2 First and C1 Advanced candidates.",
+
+  icons: {
+    icon: "/favicon.png",
+    shortcut: "/favicon.png",
+    apple: "/favicon.png",
+  },
+
+  openGraph: {
+    title: "Pharos English Lab",
+    description:
+      "Professional Cambridge diagnostics and expert readiness guidance for independent learners preparing for B2 First and C1 Advanced.",
+    siteName: "Pharos English Lab",
+    locale: "en_US",
+    type: "website",
+  },
 };
 
 export default function RootLayout({

@@ -2,11 +2,16 @@ import type { DiagnosticType, ExamLevel } from "./diagnostic";
 
 export type OrderStatus = "paid" | "submitted" | "processing" | "completed" | "failed";
 
+export type PaymentProvider = "stripe" | "paypal" | "mercadopago" | "manual";
+
 export interface Order {
   id: string;
   created_at: string;
-  stripe_session_id: string;
+  /** Which processor collected the money. Stripe orders fill stripe_session_id; PayPal orders fill paypal_order_id. */
+  payment_provider: PaymentProvider;
+  stripe_session_id: string | null;
   stripe_payment_intent_id: string | null;
+  paypal_order_id: string | null;
   customer_email: string;
   customer_name: string | null;
   diagnostic_type: DiagnosticType;
@@ -22,6 +27,12 @@ export interface Order {
   utm_campaign: string | null;
   utm_content: string | null;
   utm_term: string | null;
+  /** Set once, server-side, when the student clicks "Start Exam". Drives the countdown timer. */
+  exam_started_at: string | null;
+  /** Null until the student picks a mode on the "Start Exam" screen. true = timed simulation, false = untimed practice. */
+  exam_timed_mode: boolean | null;
+  /** Set once, alongside exam_started_at, from the bank of tests for this level (e.g. "B2-CAMBRIDGE-SAMPLE-1"). References exam_tests.test_code. */
+  assigned_test_code: string | null;
 }
 
 export interface Submission {

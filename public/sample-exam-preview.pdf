@@ -1,0 +1,95 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R 4 0 R] /Count 2 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /Resources << /Font << /F1 7 0 R >> >> /MediaBox [0 0 612 792] /Contents 5 0 R >>
+endobj
+4 0 obj
+<< /Type /Page /Parent 2 0 R /Resources << /Font << /F1 7 0 R >> >> /MediaBox [0 0 612 792] /Contents 6 0 R >>
+endobj
+5 0 obj
+<< /Length 347 >>
+stream
+BT
+/F1 20 Tf
+72 720 Td
+20 TL
+(PHAROS ENGLISH LAB) Tj
+T*
+() Tj
+T*
+(SAMPLE TEST -- PREVIEW ONLY) Tj
+T*
+() Tj
+T*
+(This is a placeholder document.) Tj
+T*
+(It shows where the real assigned) Tj
+T*
+(exam PDF will be displayed, next) Tj
+T*
+(to the answer sheet on the right.) Tj
+T*
+() Tj
+T*
+(No real Cambridge exam content) Tj
+T*
+(is included here.) Tj
+ET
+endstream
+endobj
+6 0 obj
+<< /Length 440 >>
+stream
+BT
+/F1 20 Tf
+72 720 Td
+20 TL
+(PAGE 2) Tj
+T*
+() Tj
+T*
+(In the live site, this panel will) Tj
+T*
+(show the actual test PDF assigned) Tj
+T*
+(to the student from the test bank) Tj
+T*
+(\(e.g. B2-RUE-001, C1-RUE-002...\).) Tj
+T*
+() Tj
+T*
+(The link used to display it expires) Tj
+T*
+(automatically and is unique to the) Tj
+T*
+(student's order, so tests cannot be) Tj
+T*
+(shared or accessed without a valid,) Tj
+T*
+(in-progress exam session.) Tj
+ET
+endstream
+endobj
+7 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+xref
+0 8
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000121 00000 n 
+0000000247 00000 n 
+0000000373 00000 n 
+0000000771 00000 n 
+0000001262 00000 n 
+trailer
+<< /Size 8 /Root 1 0 R >>
+startxref
+1332
+%%EOF
