@@ -152,7 +152,7 @@ export function TestPdfViewer({ orderId }: TestPdfViewerProps) {
         </span>
       </div>
       <iframe
-        src={state.url}
+        src={`${state.url}#toolbar=0&navpanes=0&view=FitH`}
         title="Your exam test"
         className="h-full min-h-[600px] w-full flex-1"
       />
