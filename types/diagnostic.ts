@@ -1,4 +1,4 @@
-export type DiagnosticType = "writing" | "use-of-english";
+export type DiagnosticType = "writing" | "use-of-english" | "listening";
 export type ExamLevel = "B2" | "C1";
 
 export interface Diagnostic {
@@ -41,6 +41,22 @@ export const DIAGNOSTICS: Diagnostic[] = [
       "Word formation assessment",
       "Key word transformations review",
       "Targeted grammar improvement areas",
+    ],
+    examLevels: ["B2", "C1"],
+  },
+  {
+    slug: "listening",
+    title: "Listening Diagnostic",
+    subtitle: "Comprehension and strategy assessment",
+    description:
+      "Complete a full Cambridge-style listening paper and receive detailed analysis of your comprehension skills, distractor recognition, and paraphrase detection.",
+    price: 8,
+    features: [
+      "Multiple choice comprehension analysis",
+      "Sentence completion accuracy review",
+      "Multiple matching strategy assessment",
+      "Distractor analysis — why wrong answers seemed right",
+      "Targeted listening practice recommendations",
     ],
     examLevels: ["B2", "C1"],
   },

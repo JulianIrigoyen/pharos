@@ -48,6 +48,7 @@ export async function POST(request: NextRequest) {
       const supabase = createAdminClient();
 
       const { error: insertError } = await supabase.from("orders").insert({
+        payment_provider: "stripe",
         stripe_session_id: session.id,
         stripe_payment_intent_id:
           typeof session.payment_intent === "string"

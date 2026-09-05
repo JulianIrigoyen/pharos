@@ -160,7 +160,9 @@ export default function ReadinessPage() {
   const questions = useMemo(() => questionsBank, []);
 
   function handleAnswer(index: number) {
-    const updated = [...answers, index];
+    const updated = [...answers];
+
+    updated.push(index);
 
     setAnswers(updated);
 
@@ -213,11 +215,11 @@ export default function ReadinessPage() {
 
           <Compass className="mx-auto mb-6 h-16 w-16 text-gold-500" />
 
-          <h1 className="font-body text-4xl font-light text-navy-900 sm:text-5xl">
-            Pharos Cambridge Placement & Readiness Assessment
+          <h1 className="font-body text-3xl font-light text-navy-900 sm:text-4xl">
+            Pharos Cambridge Readiness Assessment
           </h1>
 
-          <p className="mx-auto mt-6 max-w-2xl font-body text-lg text-navy-600">
+          <p className="mx-auto mt-6 max-w-2xl font-body text-base text-navy-600 sm:text-lg">
             Discover which Cambridge pathway may best match your current level.
           </p>
 
@@ -225,14 +227,14 @@ export default function ReadinessPage() {
 
             <div className="card p-8 text-center">
               <CheckCircle2 className="mx-auto mb-4 h-8 w-8 text-gold-500" />
-              <h3 className="font-body text-xl text-navy-900">
+              <h3 className="font-body text-lg text-navy-900">
                 B2 First
               </h3>
             </div>
 
             <div className="card p-8 text-center">
               <Sparkles className="mx-auto mb-4 h-8 w-8 text-gold-500" />
-              <h3 className="font-body text-xl text-navy-900">
+              <h3 className="font-body text-lg text-navy-900">
                 C1 Advanced
               </h3>
             </div>
@@ -256,7 +258,7 @@ export default function ReadinessPage() {
       <main className="section-light section-padding min-h-screen">
         <div className="mx-auto max-w-xl">
 
-          <h1 className="mb-8 text-center font-body text-3xl text-navy-900">
+          <h1 className="mb-8 text-center font-body text-2xl font-light text-navy-900 sm:text-3xl">
             Receive Your Results
           </h1>
 
@@ -293,18 +295,18 @@ export default function ReadinessPage() {
 
   if (submitted) {
     return (
-      <main className="section-light section-padding min-h-screen">
+      <main className="min-h-screen bg-navy-50 flex items-center justify-center px-6">
 
         <div className="mx-auto max-w-2xl text-center">
 
           <Compass className="mx-auto mb-6 h-12 w-12 text-gold-500" />
 
-          <h1 className="font-body text-3xl font-light text-navy-900">
-            Your Placement Profile Is On Its Way
+          <h1 className="font-body text-2xl font-light text-navy-900 sm:text-3xl">
+            Your Readiness Profile Is On Its Way
           </h1>
 
-          <p className="mt-6 font-body text-navy-600">
-            Please check your inbox.
+          <p className="mt-6 font-body text-base text-navy-600 sm:text-lg">
+            Please check your inbox. Your personalised feedback is on its way.
           </p>
 
         </div>
@@ -338,7 +340,7 @@ export default function ReadinessPage() {
 
         <div className="card p-6 sm:p-8 md:p-10">
 
-          <h2 className="mb-8 font-body text-2xl text-navy-900">
+          <h2 className="mb-8 font-body text-xl font-light text-navy-900 sm:text-2xl">
             {question.question}
           </h2>
 
@@ -356,7 +358,6 @@ export default function ReadinessPage() {
                 onClick={() => handleAnswer(index)}
                 className="rounded-2xl border border-navy-200 bg-white p-5 text-left font-body text-base text-navy-700 transition-all duration-300 hover:border-gold-500 hover:bg-gold-50"
               >
-
                 <span className="flex gap-3">
 
                   <span className="font-semibold text-gold-600">
@@ -366,7 +367,6 @@ export default function ReadinessPage() {
                   <span>{option}</span>
 
                 </span>
-
               </button>
             ))}
 

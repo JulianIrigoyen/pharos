@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import { LogOut, ShoppingBag } from "lucide-react";
+import { LogOut, LayoutDashboard } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import type { User } from "@supabase/supabase-js";
 
@@ -46,7 +46,7 @@ export function UserMenu({ user }: UserMenuProps) {
       <button
         type="button"
         onClick={() => setOpen((prev) => !prev)}
-        className="flex h-9 w-9 items-center justify-center overflow-hidden rounded-full border-2 border-navy-200 bg-navy-100 text-sm font-semibold text-navy-700 transition-colors hover:border-gold-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-500"
+        className="flex h-9 w-9 items-center justify-center overflow-hidden rounded-full border-2 border-white/30 bg-white/10 text-sm font-semibold text-white transition-colors hover:border-gold-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-500"
         aria-label="User menu"
         aria-expanded={open}
       >
@@ -64,7 +64,7 @@ export function UserMenu({ user }: UserMenuProps) {
       </button>
 
       {open && (
-        <div className="absolute right-0 top-full z-50 mt-2 w-52 overflow-hidden rounded-xl border border-navy-100 bg-white shadow-lg">
+        <div className="absolute right-0 top-full z-50 mt-2 w-56 overflow-hidden rounded-xl border border-navy-100 bg-white shadow-lg">
           <div className="border-b border-navy-100 px-4 py-3">
             <p className="truncate text-sm font-medium text-navy-900">
               {displayName}
@@ -76,12 +76,12 @@ export function UserMenu({ user }: UserMenuProps) {
 
           <div className="py-1">
             <Link
-              href="/orders"
+              href="/dashboard"
               onClick={() => setOpen(false)}
               className="flex w-full items-center gap-2 px-4 py-2.5 text-sm text-navy-700 hover:bg-navy-50 transition-colors"
             >
-              <ShoppingBag className="h-4 w-4" />
-              My Orders
+              <LayoutDashboard className="h-4 w-4" />
+              My Dashboard
             </Link>
 
             <button
